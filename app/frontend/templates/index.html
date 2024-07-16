@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Poker Game</title>
+</head>
+<body>
+    <h1>Start a New Poker Game</h1>
+    <form action="/start_game" method="post">
+        <label for="max_round">Max Rounds:</label>
+        <input type="number" id="max_round" name="max_round" value="10"><br><br>
+        <label for="stack">Initial Stack:</label>
+        <input type="number" id="stack" name="stack" value="100"><br><br>
+        <label for="small_blind">Small Blind:</label>
+        <input type="number" id="small_blind" name="small_blind" value="10"><br><br>
+        <label for="ante">Ante:</label>
+        <input type="number" id="ante" name="ante" value="0"><br><br>
+        <button type="submit">Start Game</button>
+    </form>
+</body>
+</html>

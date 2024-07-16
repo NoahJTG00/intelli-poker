@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Play Poker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='instructions_poker.css') }}">
+    <script>
+        function submitForm(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            fetch('/game/start', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    max_round: 10,
+                    stack: 100,
+                    small_blind: 10,
+                    ante: 0
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    console.error('Form submission failed:', response);
+                }
+            })
+            .catch(error => {
+                console.error('Form submission error:', error);
+            });
+
+            return false; // Ensure the form does not submit traditionally
+        }
+
+        function receiveMessage(data) {
+            const chatArea = document.getElementById('chat-area');
+
+            // Append bot response to chat area
+            const botMessage = document.createElement('div');
+            botMessage.className = 'message bot-message';
+            botMessage.textContent = 'Bot: ' + data.response;
+            chatArea.appendChild(botMessage);
+        }
+
+        function fetchAnalysis() {
+            fetch('/get_analysis')
+            .then(response => response.json())
+            .then(data => {
+                const chatArea = document.getElementById('chat-area');
+                chatArea.innerHTML = ''; // Clear existing messages
+                data.analysis_list.forEach(analysis => {
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'message bot-message';
+                    botMessage.textContent = 'Bot: ' + analysis;
+                    chatArea.appendChild(botMessage);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching analysis:', error);
+            });
+        }
+
+        // Periodically fetch the analysis data
+        setInterval(fetchAnalysis, 5000); // Fetch every 5 seconds
+    </script>
+</head>
+<body onload="fetchAnalysis()">
+    <div class="container">
+        <header>
+            <h1>How to Play Poker</h1>
+        </header>
+        <main>
+            <section>
+                <h2>Introduction</h2>
+                <p>Poker is a popular card game that combines skill, strategy, and a bit of luck. The game is played with a standard 52-card deck, and the goal is to win chips or money by having the best hand or convincing others that you have the best hand.</p>
+            </section>
+            
+            <section>
+                <h2>Basic Rules</h2>
+                <p>Here are the basic rules of Texas Hold'em, the most popular variant of poker:</p>
+                <ul>
+                    <li>Each player is dealt two private cards (known as "hole cards").</li>
+                    <li>Five community cards are dealt face-up on the "board".</li>
+                    <li>Players use these seven cards to make the best five-card hand.</li>
+                    <li>The game consists of four betting rounds: Pre-flop, Flop, Turn, and River.</li>
+                    <li>Players can bet, check, call, raise, or fold during their turn.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Hand Rankings</h2>
+                <p>Here are the poker hand rankings from highest to lowest:</p>
+                <ul>
+                    <li><strong>Royal Flush:</strong> A, K, Q, J, 10, all of the same suit.</li>
+                    <li><strong>Straight Flush:</strong> Five consecutive cards of the same suit.</li>
+                    <li><strong>Four of a Kind:</strong> Four cards of the same rank.</li>
+                    <li><strong>Full House:</strong> Three of a kind and a pair.</li>
+                    <li><strong>Flush:</strong> Five cards of the same suit.</li>
+                    <li><strong>Straight:</strong> Five consecutive cards of different suits.</li>
+                    <li><strong>Three of a Kind:</strong> Three cards of the same rank.</li>
+                    <li><strong>Two Pair:</strong> Two different pairs.</li>
+                    <li><strong>One Pair:</strong> One pair of the same rank.</li>
+                    <li><strong>High Card:</strong> The highest card if no other hand is made.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Betting Rounds</h2>
+                <p>The game progresses through several betting rounds:</p>
+                <ul>
+                    <li><strong>Pre-flop:</strong> After receiving their hole cards, players bet.</li>
+                    <li><strong>Flop:</strong> The first three community cards are dealt face-up, followed by a betting round.</li>
+                    <li><strong>Turn:</strong> The fourth community card is dealt face-up, followed by another betting round.</li>
+                    <li><strong>River:</strong> The fifth and final community card is dealt face-up, followed by the final betting round.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Winning the Game</h2>
+                <p>The game ends in one of two ways:</p>
+                <ul>
+                    <li><strong>Showdown:</strong> If two or more players remain after the final betting round, they reveal their hands, and the player with the best hand wins the pot.</li>
+                    <li><strong>Fold:</strong> If all but one player folds, the remaining player wins the pot without having to show their hand.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Tips for Beginners</h2>
+                <p>Here are some tips to help you get started:</p>
+                <ul>
+                    <li>Start with low-stakes games to learn the rules and strategies.</li>
+                    <li>Pay attention to other players and their betting patterns.</li>
+                    <li>Practice good bankroll management to avoid losing too much money.</li>
+                    <li>Don't be afraid to fold if you have a weak hand.</li>
+                </ul>
+            </section>
+            
+            <form id="start-game-form" onsubmit="submitForm(event);">
+                <input type="submit" value="Play Now!" class="play-now">
+            </form>
+
+            <!-- Chatbot Section -->
+            <section id="chatbot-section">
+                <h2>Chatbot Analysis</h2>
+                <div id="chat-area" class="chat-area"></div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
