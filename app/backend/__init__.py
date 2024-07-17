@@ -12,6 +12,7 @@ bcrypt = Bcrypt()
 # Set your OpenAI API key here
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 openai.api_key = OPENAI_API_KEY
+print("SDKFJLDKFS", OPENAI_API_KEY, flush=True)
 analysis_list = []
 def create_app():
     app = Flask(__name__, template_folder="../frontend/templates", static_folder="../frontend/static")

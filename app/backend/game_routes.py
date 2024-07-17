@@ -9,7 +9,7 @@ def start_game():
     if request.method == 'POST':
         
         # Path to the separate virtual environment's python executable
-        poker_env_python = os.path.join(os.path.abspath('poker_env'), 'bin', 'python')
+        poker_env_python = os.path.join(os.path.abspath('venv'), 'bin', 'python')
 
         # Start the PyPokerGUI server using the separate virtual environment
         subprocess.Popen([poker_env_python, "-m", "pypokergui", "serve", "app/backend/game/poker_conf.yaml", "--port", "8000", "--speed", "moderate"])
