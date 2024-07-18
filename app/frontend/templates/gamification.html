@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ user.username }}'s Profile</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <link rel="stylesheet" href="../static/gamification.css">
 </head>
 <body>
     <div class="container">
@@ -14,7 +14,7 @@
         <div class="profile-section">
             <div class="achievement-item">
                 <div class="achievement-icon">
-                    <img src="gamification_images/streak.jpeg" alt="Streak Icon">
+                    <img src="../static/gamification_images/streak.jpeg" alt="Streak Icon">
                 </div>
                 <div class="achievement-details">
                     <h2>Wildfire</h2>
@@ -28,7 +28,7 @@
 
             <div class="achievement-item">
                 <div class="achievement-icon">
-                    <img src="{{ url_for('static', filename='icons/champion.png') }}" alt="Champion Icon">
+                    <img src="../static/gamification_images/champion.jpeg" alt="Champion Icon">
                 </div>
                 <div class="achievement-details">
                     <h2>Champion</h2>
@@ -42,7 +42,7 @@
 
             <div class="achievement-item">
                 <div class="achievement-icon">
-                    <img src="{{ url_for('static', filename='icons/top_hand.png') }}" alt="Top Hand Icon">
+                    <img src="../static/gamification_images/tophand.jpeg" alt="Top Hand Icon">
                 </div>
                 <div class="achievement-details">
                     <h2>Top Hand</h2>
@@ -56,7 +56,7 @@
 
             <div class="achievement-item">
                 <div class="achievement-icon">
-                    <img src="{{ url_for('static', filename='icons/wins.png') }}" alt="Wins Icon">
+                    <img src="../static/gamification_images/overachiever.jpeg" alt="Wins Icon">
                 </div>
                 <div class="achievement-details">
                     <h2>Overachiever</h2>
