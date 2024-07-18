@@ -1,0 +1,90 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container Styles */
+.container {
+    width: 90%;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styles */
+header {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+header h1 {
+    color: #0d0b02;
+    font-size: 2em;
+    margin: 0;
+}
+
+/* Profile Section Styles */
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Achievement Item Styles */
+.achievement-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+}
+
+.achievement-icon {
+    margin-right: 15px;
+}
+
+.achievement-icon img {
+    width: 50px;
+    height: 50px;
+}
+
+.achievement-details {
+    flex: 1;
+}
+
+.achievement-details h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.achievement-details p {
+    margin: 5px 0;
+    color: #777;
+}
+
+.progress-bar {
+    width: 100%;
+    background: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.progress {
+    height: 10px;
+    background: #ff9500;
+    border-radius: 5px;
+}
+
+.achievement-details span {
+    font-size: 0.9em;
+    color: #777;
+}

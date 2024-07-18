@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user.username }}'s Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>{{ user.username }}'s Profile</h1>
+        </header>
+
+        <div class="profile-section">
+            <div class="achievement-item">
+                <div class="achievement-icon">
+                    <img src="gamification_images/streak.jpeg" alt="Streak Icon">
+                </div>
+                <div class="achievement-details">
+                    <h2>Wildfire</h2>
+                    <p>Maintain a 30-day streak</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: {{ user.login_streak.login_streak / 30 * 100 }}%;"></div>
+                    </div>
+                    <span>{{ user.login_streak.login_streak }}/30</span>
+                </div>
+            </div>
+
+            <div class="achievement-item">
+                <div class="achievement-icon">
+                    <img src="{{ url_for('static', filename='icons/champion.png') }}" alt="Champion Icon">
+                </div>
+                <div class="achievement-details">
+                    <h2>Champion</h2>
+                    <p>Double your initial bet</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: {{ user.doubled_bet_progress }}%;"></div>
+                    </div>
+                    <span>{{ user.doubled_bet_count }}/1</span>
+                </div>
+            </div>
+
+            <div class="achievement-item">
+                <div class="achievement-icon">
+                    <img src="{{ url_for('static', filename='icons/top_hand.png') }}" alt="Top Hand Icon">
+                </div>
+                <div class="achievement-details">
+                    <h2>Top Hand</h2>
+                    <p>Achieve a Royal Flush, Straight Flush, Four of a Kind, or Full House</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: {{ user.top_hand_progress }}%;"></div>
+                    </div>
+                    <span>{{ user.top_hand_count }}/1</span>
+                </div>
+            </div>
+
+            <div class="achievement-item">
+                <div class="achievement-icon">
+                    <img src="{{ url_for('static', filename='icons/wins.png') }}" alt="Wins Icon">
+                </div>
+                <div class="achievement-details">
+                    <h2>Overachiever</h2>
+                    <p>Win 5 consecutive games</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: {{ user.consecutive_wins / 5 * 100 }}%;"></div>
+                    </div>
+                    <span>{{ user.consecutive_wins }}/5</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
