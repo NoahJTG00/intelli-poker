@@ -116,3 +116,17 @@ nav a:hover {
     background-color: #4169e1;
     color: white;
 }
+
+a, a:visited {
+    text-decoration: none;  
+    color: inherit;  
+}
+
+.card-link, .card-link:visited {
+    text-decoration: none;
+    color: inherit; 
+}
+
+.card-link:hover {
+    text-decoration: underline;  
+}

@@ -22,36 +22,42 @@
     </div>
 
     <div class="cards-section">
-        <div class="card">
-            <img src="{{ url_for('static', filename='images/poker1.jpg') }}" alt="Poker Game 1">
-            <h2>Texas Hold'em</h2>
-            <p>Join a game of Texas Hold'em</p>
-            <div class="progress-bar">
-                <div class="progress" style="width: 70%;"></div>
+        <a href="{{ url_for('game_bp.instructions') }}" class="card-link">
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/poker1.jpg') }}" alt="Poker Game 1">
+                <h2>Texas Hold'em</h2>
+                <p>Learn how to play  Texas Hold'em</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 60%;"></div>
+                </div>
+                <span>Game 4 of 7</span>
             </div>
-            <span>Game 5 of 7</span>
-        </div>
-
-        <div class="card">
-            <img src="{{ url_for('static', filename='images/poker2.jpg') }}" alt="Poker Game 2">
-            <h2>Omaha Poker</h2>
-            <p>Join a game of Omaha Poker</p>
-            <div class="progress-bar">
-                <div class="progress" style="width: 50%;"></div>
+        </a>
+    
+        <a href="{{ url_for('game_bp.instructions') }}" class="card-link">
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/poker2.jpg') }}" alt="Poker Game 2">
+                <h2>Omaha Poker</h2>
+                <p>Learn how to play  Omaha Poker</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 50%;"></div>
+                </div>
+                <span>Game 1 of 2</span>
             </div>
-            <span>Game 3 of 6</span>
-        </div>
-
-        <div class="card">
-            <img src="{{ url_for('static', filename='images/poker3.jpg') }}" alt="Poker Game 3">
-            <h2>Seven-Card Stud</h2>
-            <p>Join a game of Seven-Card Stud</p>
-            <div class="progress-bar">
-                <div class="progress" style="width: 40%;"></div>
+        </a>
+    
+        <a href="{{ url_for('game_bp.instructions') }}" class="card-link">
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/poker3.jpg') }}" alt="Poker Game 3">
+                <h2>Seven-Card Stud</h2>
+                <p>Learn how to play Seven-Card Stud</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 0%;"></div>
+                </div>
+                <span>Game 0 of 2</span>
             </div>
-            <span>Game 2 of 5</span>
-        </div>
-    </div>
+        </a>
+    </div>    
 
     <footer class="footer">
         <p>&copy; 2024 Intelli-Poker. All rights reserved.</p>
