@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         document.querySelector(".achievement-item:nth-child(4) .progress").style.width = achievements.overachiever_progress + "%";
         document.querySelector(".achievement-item:nth-child(4) span").innerText = achievements.overachiever_count + "/5";
-    }, 1000); // Simulate a 1-second data fetch delay
+    }, 1000); // simulate a 1-second data fetch delay lol
 });
 
 function simulateGame() {

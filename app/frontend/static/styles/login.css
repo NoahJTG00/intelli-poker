@@ -5,7 +5,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background: linear-gradient(to right, #989fa9, #81b0f3); /* Gradient background */
+    background: linear-gradient(to right, #989fa9, #81b0f3);
 }
 
 .login-container, .register-container {
@@ -16,12 +16,12 @@ body {
     overflow: hidden;
     max-width: 900px;
     width: 100%;
-    justify-content: space-between; /* Adjusted to space-between to evenly distribute the space */
-    padding: 40px; /* Add padding to the container */
+    justify-content: space-between; 
+    padding: 40px; 
 }
 
 .login-form, .register-form {
-    flex: 0.5; /* Equal flex to the image section */
+    flex: 0.5; 
     max-width: 600px;
     width: 100%;
 }
@@ -34,7 +34,7 @@ body {
 .login-form p, .register-form p {
     margin: 10px 0;
     color: #666;
-    line-height: 1.4; /* Adjust line height for better readability */
+    line-height: 1.4; 
 }
 
 .login-form a, .register-form a {
@@ -111,11 +111,11 @@ button:hover {
     border: 1px solid #ccc;
     border-radius: 6px;
     box-sizing: border-box;
-    padding: 0; /* Remove padding */
+    padding: 0; 
 }
 
 .login-illustration {
-    flex: 0.5; /* Adjusted to make the image container equal to the form */
+    flex: 0.5; 
     background-color: #f9fafc;
     padding: 20px;
     align-items: center;
@@ -125,5 +125,5 @@ button:hover {
 
 .login-illustration img {
     max-width: 100%;
-    max-height: 250px; /* Adjust this value to control the maximum height of the image */
+    max-height: 250px; 
 }
