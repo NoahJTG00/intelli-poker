@@ -3,28 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/register.css') }}">
+    <title>Register - IntelliPoker</title>
+    <link rel="stylesheet" href="/app/frontend/static/styles/register.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Register</h2>
-        <form action="{{ url_for('game_bp.register') }}" method="POST">
-            <div class="input-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+    <div class="register-container">
+        <div class="register-form">
+            <h1>Join IntelliPoker!</h1>
+            <p>Already have an account? <a href="{{ url_for('game_bp.login') }}">Sign in</a></p>
+            <form method="POST" action="{{ url_for('game_bp.register') }}">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" placeholder="user@gmail.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="user@gmail.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit">Sign Up</button>
+            </form>
+            <p>or continue with</p>
+            <div class="social-login">
+                <a href="#"><img src="{{ url_for('static', filename='google-icon.png') }}" alt="Google"></a>
+                <a href="#"><img src="{{ url_for('static', filename='facebook-icon.png') }}" alt="Facebook"></a>
+                <a href="#"><img src="{{ url_for('static', filename='apple-icon.png') }}" alt="Apple"></a>
             </div>
-            <div class="input-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="input-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Register</button>
-        </form>
-        <p>Already have an account? <a href="{{ url_for('game_bp.login') }}">Login here</a></p>
+        </div>
+        <div class="register-illustration">
+            <img src="/app/frontend/static/images/stuff.jpg" alt="Illustration">
+        </div>
     </div>
 </body>
 </html>

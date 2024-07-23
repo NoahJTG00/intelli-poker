@@ -1,73 +1,38 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    font-family: 'Arial', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    background: linear-gradient(to right, #989fa9, #81b0f3);
 }
 
-.register-container {
-    background-color: #ffffff;
+.login-container, .register-container {
+    display: flex;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 400px;
-    text-align: center;
-}
-
-.register-form h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-}
-
-.register-form p {
-    margin-bottom: 20px;
-    color: #666;
-}
-
-.register-form a {
-    color: #007BFF;
-    text-decoration: none;
-}
-
-.register-form a:hover {
-    text-decoration: underline;
-}
-
-.input-group {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333;
-}
-
-.input-group input {
-    width: calc(100% - 20px);
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
+    overflow: hidden;
+    max-width: 900px;
     width: 100%;
-    padding: 10px;
-    background-color: #007BFF;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
+    justify-content: space-between;
+    padding: 40px;
 }
 
-button:hover {
-    background-color: #0056b3;
+.login-form, .register-form {
+    flex: 0.5;
+    max-width: 600px;
+    width: 100%;
+}
+
+.login-form h1, .register-form h1 {
+    margin-top: 0;
+    color: #333;
+}
+
+.login-form p, .register-form p {
+    margin: 10px 0;
+    color: #666;
+    line-height: 1.4;
 }
