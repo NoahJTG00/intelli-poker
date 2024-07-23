@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - IntelliPoker</title>
-    <link rel="stylesheet" href="/app/frontend/static/styles/register.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/register.css') }}">
 </head>
 <body>
     <div class="register-container">
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="register-illustration">
-            <img src="/app/frontend/static/images/stuff.jpg" alt="Illustration">
+            <img src="{{ url_for('static', filename='/images/stuff.jpg') }}" alt="Illustration">
         </div>
     </div>
 </body>
