@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #4a90e2;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.header nav {
+    display: flex;
+}
+
+.header nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0 15px;
+}
+
+.header nav a:hover {
+    text-decoration: underline;
+}
+
+.profile-section {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile-section h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.achievement-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.achievement-icon img {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+}
+
+.achievement-details {
+    flex: 1;
+}
+
+.achievement-details h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.achievement-details p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.progress-bar {
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 20px;
+    margin: 10px 0;
+}
+
+.progress-bar .progress {
+    background-color: #7ca6eb;
+    height: 100%;
+}

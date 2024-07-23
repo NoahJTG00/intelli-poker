@@ -3,11 +3,11 @@ from flask import Flask, session, redirect, url_for, render_template, request, f
 from dotenv import load_dotenv
 from flask_bcrypt import Bcrypt
 import openai
-import logging
 
 load_dotenv()
 
 bcrypt = Bcrypt()
+
 
 # Set your OpenAI API key here
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -70,6 +70,6 @@ def create_app():
     return app
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
     app = create_app()
     app.run()
+    

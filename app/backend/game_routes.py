@@ -90,10 +90,14 @@ def play_game():
     return render_template('game.html')  # Renders the game page
 
 # New profile route
+@game_bp.route('/instructions')
+def instructions():
+    return render_template('instructions.html')
+
 @game_bp.route('/profile')
 def profile():
-    user = current_user  # Assuming you have a way to get the current user
-    return render_template('profile.html', user=user)
+    return render_template('profile.html')
+
 
 @game_bp.route("/logout")
 def logout():
