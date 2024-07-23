@@ -7,10 +7,10 @@ def create_tables():
     cursor.execute(
         """
         CREATE TABLE IF NOT EXISTS users (
-            user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT UNIQUE,
-            email TEXT NOT NULL UNIQUE,
-            password TEXT NOT NULL,
+            user_id INT PRIMARY KEY AUTO_INCREMENT,
+            username VARCHAR(255) UNIQUE,
+            email VARCHAR(255) NOT NULL UNIQUE,
+            password VARCHAR(255) NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
         """

@@ -1,8 +1,9 @@
-from flask import Blueprint, request, render_template, redirect, url_for, flash, session
+from flask import Blueprint, jsonify, request, render_template, redirect, url_for, flash, session
 from flask_login import login_required, current_user
 import subprocess
 import os
 from . import bcrypt
+from flask_bcrypt import Bcrypt
 from .utils import get_db_connection
 import socket
 
@@ -12,9 +13,10 @@ game_bp = Blueprint('game_bp', __name__)
 
 @game_bp.route('/start', methods=['GET', 'POST'])
 def start_game():
-    if request.method == 'POST':
-        # Path to the separate virtual environment's python executable
-        poker_env_python = os.path.join(os.path.abspath('venv'), 'bin', 'python')
+    if not is_server_running('127.0.0.1', 8000):
+        start_server()
+        return jsonify({'status': 'Server started'}), 200
+    return jsonify({'status': 'Server already running'}), 200
 
 def is_server_running(host, port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
