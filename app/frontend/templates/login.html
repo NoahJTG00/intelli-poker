@@ -1,35 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login Page</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - VacaQuest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/login.css') }}">
 </head>
 <body>
-<div class="login-container">
-    <h1>Welcome back!</h1>
-    <p>Enter your Credentials to access your account</p>
-    <form action="/login" method="post">
-        <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+    <div class="login-container">
+        <div class="login-form">
+            <h1>Welcome to IntelliPoker!</h1>
+            <p>Don't have an account? <a href="{{ url_for('game_bp.register') }}">Sign up</a>
+            <form method="POST" action="{{ url_for('game_bp.login') }}">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" placeholder="user@gmail.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" placeholder="••••••••" required>
+                </div>
+                <div class="options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                </div>
+                <button type="submit">Sign In</button>
+            </form>
+            <p>or continue with</p>
+            <div class="social-login">
+                <a href="#"><img src="{{ url_for('static', filename='google-icon.png') }}" alt="Google"></a>
+                <a href="#"><img src="{{ url_for('static', filename='facebook-icon.png') }}" alt="Facebook"></a>
+                <a href="#"><img src="{{ url_for('static', filename='apple-icon.png') }}" alt="Apple"></a>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Password" required>
-            <a href="#" class="forgot-password">forgot password?</a>
+        <div class="login-illustration">
+            <img src="{{ url_for('static', filename='/images/stuff.jpg') }}" alt="Illustration">
         </div>
-        <div class="form-group">
-            <input type="checkbox" id="remember">
-            <label for="remember">Remember for 30 days</label>
-        </div>
-        <button type="submit" class="login-button">Login</button>
-        <div class="divider">Or</div>
-        <button type="button" class="social-login google">Sign in with Google</button>
-        <button type="button" class="social-login apple">Sign in with Apple</button>
-    </form>
-    <p class="signup-link">Don’t have an account? <a href="#">Sign Up</a></p>
-</div>
+    </div>
 </body>
 </html>
