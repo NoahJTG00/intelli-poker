@@ -1,0 +1,129 @@
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(to right, #989fa9, #81b0f3);
+}
+
+.login-container, .register-container {
+    display: flex;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 900px;
+    width: 100%;
+    justify-content: space-between; 
+    padding: 40px; 
+}
+
+.login-form, .register-form {
+    flex: 0.5; 
+    max-width: 600px;
+    width: 100%;
+}
+
+.login-form h1, .register-form h1 {
+    margin-top: 0;
+    color: #333;
+}
+
+.login-form p, .register-form p {
+    margin: 10px 0;
+    color: #666;
+    line-height: 1.4; 
+}
+
+.login-form a, .register-form a {
+    color: #4a90e2;
+    text-decoration: none;
+}
+
+.login-form a:hover, .register-form a:hover {
+    text-decoration: underline;
+}
+
+.input-group {
+    margin: 20px 0;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.options .remember-me {
+    display: flex;
+    align-items: center;
+}
+
+.options .remember-me input {
+    margin-right: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #357ab8;
+}
+
+.social-login {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.social-login a {
+    margin: 0 6px;
+}
+
+.social-login a img {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    padding: 0; 
+}
+
+.login-illustration {
+    flex: 0.5; 
+    background-color: #f9fafc;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.login-illustration img {
+    max-width: 100%;
+    max-height: 250px; 
+}

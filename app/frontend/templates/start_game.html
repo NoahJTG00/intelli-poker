@@ -4,35 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How to Play Poker</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='instructions_poker.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     <script>
-        function submitForm(event) {
-            event.preventDefault(); // Prevent the default form submission
-
-            fetch('/game/start', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: new URLSearchParams({
-                    max_round: 10,
-                    stack: 100,
-                    small_blind: 10,
-                    ante: 0
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    console.error('Form submission failed:', response);
-                }
-            })
-            .catch(error => {
-                console.error('Form submission error:', error);
-            });
-
-            return false; // Ensure the form does not submit traditionally
-        }
-
         function receiveMessage(data) {
             const chatArea = document.getElementById('chat-area');
 
@@ -136,15 +109,9 @@
                 </ul>
             </section>
             
-            <form id="start-game-form" onsubmit="submitForm(event);">
+            <form action="/game" method="get">
                 <input type="submit" value="Play Now!" class="play-now">
             </form>
-
-            <!-- Chatbot Section -->
-            <section id="chatbot-section">
-                <h2>Chatbot Analysis</h2>
-                <div id="chat-area" class="chat-area"></div>
-            </section>
         </main>
     </div>
 </body>

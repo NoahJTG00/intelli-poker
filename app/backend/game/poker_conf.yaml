@@ -6,12 +6,12 @@ max_round: 10
 small_blind: 1
 ai_players:
 - name: robot_1
-  path: /Users/noahtaliercio/Documents/Internships/Summer 2024/SEO Tech Dev/intelli-poker/app/backend/game/print_player_setup.py
+  path: /Users/sophieagbekpenou/Desktop/projects/intelli-poker/app/backend/game/print_player_setup.py
 - name: robot_2
-  path: /Users/noahtaliercio/Documents/Internships/Summer 2024/SEO Tech Dev/intelli-poker/app/backend/game/honest_player_setup.py
+  path: /Users/sophieagbekpenou/Desktop/projects/intelli-poker/app/backend/game/honest_player_setup.py
 - name: robot_3
-  path: /Users/noahtaliercio/Documents/Internships/Summer 2024/SEO Tech Dev/intelli-poker/app/backend/game/random_player_setup.py
+  path: /Users/sophieagbekpenou/Desktop/projects/intelli-poker/app/backend/game/random_player_setup.py
 - name: robot_4
-  path: /Users/noahtaliercio/Documents/Internships/Summer 2024/SEO Tech Dev/intelli-poker/app/backend/game/random_player_setup.py
+  path: /Users/sophieagbekpenou/Desktop/projects/intelli-poker/app/backend/game/random_player_setup.py
 - name: robot_5
-  path: /Users/noahtaliercio/Documents/Internships/Summer 2024/SEO Tech Dev/intelli-poker/app/backend/game/honest_player_setup.py
+  path: /Users/sophieagbekpenou/Desktop/projects/intelli-poker/app/backend/game/honest_player_setup.py

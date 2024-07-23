@@ -3,20 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Start Poker Game</title>
+    <title>Intelli-Poker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
 </head>
 <body>
-    <h1>Start a New Poker Game</h1>
-    <form action="/start_game" method="post">
-        <label for="max_round">Max Rounds:</label>
-        <input type="number" id="max_round" name="max_round" value="10"><br><br>
-        <label for="stack">Initial Stack:</label>
-        <input type="number" id="stack" name="stack" value="100"><br><br>
-        <label for="small_blind">Small Blind:</label>
-        <input type="number" id="small_blind" name="small_blind" value="10"><br><br>
-        <label for="ante">Ante:</label>
-        <input type="number" id="ante" name="ante" value="0"><br><br>
-        <button type="submit">Start Game</button>
-    </form>
+    <header class="header">
+        <div class="logo">Intelli-Poker</div>
+        <nav>
+            <a href="{{ url_for('main_bp.index') }}">Home</a>
+            <a href="{{ url_for('game_bp.start_game') }}">Start Game</a>
+            <a href="{{ url_for('game_bp.instructions') }}">Instructions</a>
+            <a href="{{ url_for('game_bp.profile') }}">Profile</a>
+        </nav>
+    </header>
+
+    <div class="welcome-section">
+        <h1>Welcome back, ready for your next game?</h1>
+    </div>
+
+    <div class="cards-section">
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/poker1.jpg') }}" alt="Poker Game 1">
+            <h2>Texas Hold'em</h2>
+            <p>Join a game of Texas Hold'em</p>
+            <div class="progress-bar">
+                <div class="progress" style="width: 70%;"></div>
+            </div>
+            <span>Game 5 of 7</span>
+        </div>
+
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/poker2.jpg') }}" alt="Poker Game 2">
+            <h2>Omaha Poker</h2>
+            <p>Join a game of Omaha Poker</p>
+            <div class="progress-bar">
+                <div class="progress" style="width: 50%;"></div>
+            </div>
+            <span>Game 3 of 6</span>
+        </div>
+
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/poker3.jpg') }}" alt="Poker Game 3">
+            <h2>Seven-Card Stud</h2>
+            <p>Join a game of Seven-Card Stud</p>
+            <div class="progress-bar">
+                <div class="progress" style="width: 40%;"></div>
+            </div>
+            <span>Game 2 of 5</span>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Intelli-Poker. All rights reserved.</p>
+    </footer>
 </body>
 </html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelli-Poker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/instructions.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Intelli-Poker</div>
+        <nav>
+            <a href="{{ url_for('main_bp.index') }}">Home</a>
+            <a href="{{ url_for('game_bp.start_game') }}">Start Game</a>
+            <a href="{{ url_for('game_bp.instructions') }}">Instructions</a>
+            <a href="{{ url_for('game_bp.profile') }}">Profile</a>
+        </nav>
+    </header>
+    <div class="instructions-container">
+        <aside class="sidebar">
+            <h2>Games</h2>
+            <ul>
+                <li><a href="#texas_holdem">Texas Hold'em</a></li>
+                <li><a href="#omaha_poker">Omaha Poker</a></li>
+                <li><a href="#seven_card_stud">Seven-Card Stud</a></li>
+            </ul>
+        </aside>
+        <div class="main-content">
+            <section id="texas_holdem" class="card texas">
+                <h2>Texas Hold'em</h2>
+                <h3>Basic Rules</h3>
+                <ul>
+                    <li>Each player is dealt two private cards (known as "hole cards").</li>
+                    <li>Five community cards are dealt face-up on the "board".</li>
+                    <li>Players use these seven cards to make the best five-card hand.</li>
+                    <li>The game consists of four betting rounds: Pre-flop, Flop, Turn, and River.</li>
+                    <li>Players can bet, check, call, raise, or fold during their turn.</li>
+                </ul>
+                <h3>Hand Rankings</h3>
+                <ul>
+                    <li><strong>Royal Flush:</strong> A, K, Q, J, 10, all of the same suit.</li>
+                    <li><strong>Straight Flush:</strong> Five consecutive cards of the same suit.</li>
+                    <li><strong>Four of a Kind:</strong> Four cards of the same rank.</li>
+                    <li><strong>Full House:</strong> Three of a kind and a pair.</li>
+                    <li><strong>Flush:</strong> Five cards of the same suit.</li>
+                    <li><strong>Straight:</strong> Five consecutive cards of different suits.</li>
+                    <li><strong>Three of a Kind:</strong> Three cards of the same rank.</li>
+                    <li><strong>Two Pair:</strong> Two different pairs.</li>
+                    <li><strong>One Pair:</strong> One pair of the same rank.</li>
+                    <li><strong>High Card:</strong> The highest card if no other hand is made.</li>
+                </ul>
+                <h3>Betting Rounds</h3>
+                <ul>
+                    <li><strong>Pre-flop:</strong> After receiving their hole cards, players bet.</li>
+                    <li><strong>Flop:</strong> The first three community cards are dealt face-up, followed by a betting round.</li>
+                    <li><strong>Turn:</strong> The fourth community card is dealt face-up, followed by another betting round.</li>
+                    <li><strong>River:</strong> The fifth and final community card is dealt face-up, followed by the final betting round.</li>
+                </ul>
+            </section>
+            <section id="omaha_poker" class="card omaha">
+                <h2>Omaha Poker</h2>
+                <h3>Basic Rules</h3>
+                <ul>
+                    <li>Each player is dealt four private cards.</li>
+                    <li>Five community cards are dealt face-up on the "board".</li>
+                    <li>Players must use exactly two of their private cards and three of the community cards to make the best five-card hand.</li>
+                    <li>The game consists of four betting rounds: Pre-flop, Flop, Turn, and River.</li>
+                    <li>Players can bet, check, call, raise, or fold during their turn.</li>
+                </ul>
+                <h3>Hand Rankings</h3>
+                <ul>
+                    <li><strong>Royal Flush:</strong> A, K, Q, J, 10, all of the same suit.</li>
+                    <li><strong>Straight Flush:</strong> Five consecutive cards of the same suit.</li>
+                    <li><strong>Four of a Kind:</strong> Four cards of the same rank.</li>
+                    <li><strong>Full House:</strong> Three of a kind and a pair.</li>
+                    <li><strong>Flush:</strong> Five cards of the same suit.</li>
+                    <li><strong>Straight:</strong> Five consecutive cards of different suits.</li>
+                    <li><strong>Three of a Kind:</strong> Three cards of the same rank.</li>
+                    <li><strong>Two Pair:</strong> Two different pairs.</li>
+                    <li><strong>One Pair:</strong> One pair of the same rank.</li>
+                    <li><strong>High Card:</strong> The highest card if no other hand is made.</li>
+                </ul>
+                <h3>Betting Rounds</h3>
+                <ul>
+                    <li><strong>Pre-flop:</strong> After receiving their private cards, players bet.</li>
+                    <li><strong>Flop:</strong> The first three community cards are dealt face-up, followed by a betting round.</li>
+                    <li><strong>Turn:</strong> The fourth community card is dealt face-up, followed by another betting round.</li>
+                    <li><strong>River:</strong> The fifth and final community card is dealt face-up, followed by the final betting round.</li>
+                </ul>
+            </section>
+            <section id="seven_card_stud" class="card seven">
+                <h2>Seven-Card Stud</h2>
+                <h3>Basic Rules</h3>
+                <ul>
+                    <li>Each player is dealt seven cards, three down and four up, over the course of five rounds.</li>
+                    <li>The goal is to make the best five-card hand from the seven cards received.</li>
+                    <li>The game consists of five betting rounds.</li>
+                    <li>Players can bet, check, call, raise, or fold during their turn.</li>
+                </ul>
+                <h3>Hand Rankings</h3>
+                <ul>
+                    <li><strong>Royal Flush:</strong> A, K, Q, J, 10, all of the same suit.</li>
+                    <li><strong>Straight Flush:</strong> Five consecutive cards of the same suit.</li>
+                    <li><strong>Four of a Kind:</strong> Four cards of the same rank.</li>
+                    <li><strong>Full House:</strong> Three of a kind and a pair.</li>
+                    <li><strong>Flush:</strong> Five cards of the same suit.</li>
+                    <li><strong>Straight:</strong> Five consecutive cards of different suits.</li>
+                    <li><strong>Three of a Kind:</strong> Three cards of the same rank.</li>
+                    <li><strong>Two Pair:</strong> Two different pairs.</li>
+                    <li><strong>One Pair:</strong> One pair of the same rank.</li>
+                    <li><strong>High Card:</strong> The highest card if no other hand is made.</li>
+                </ul>
+                <h3>Betting Rounds</h3>
+                <ul>
+                    <li><strong>Third Street:</strong> Each player is dealt three cards, two down and one up. Betting starts with the player showing the lowest card.</li>
+                    <li><strong>Fourth Street:</strong> Each player is dealt a fourth card face-up. Betting starts with the player showing the highest hand.</li>
+                    <li><strong>Fifth Street:</strong> Each player is dealt a fifth card face-up. Betting starts with the player showing the highest hand.</li>
+                    <li><strong>Sixth Street:</strong> Each player is dealt a sixth card face-up. Betting starts with the player showing the highest hand.</li>
+                    <li><strong>Seventh Street:</strong> Each player is dealt a seventh and final card face-down. Betting starts with the player showing the highest hand.</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

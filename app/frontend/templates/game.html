@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Poker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/instructions_poker.css') }}">
+    <script>
+        function receiveMessage(data) {
+            const chatArea = document.getElementById('chat-area');
+
+            // Append bot response to chat area
+            const botMessage = document.createElement('div');
+            botMessage.className = 'message bot-message';
+            botMessage.textContent = 'Bot: ' + data.response;
+            chatArea.appendChild(botMessage);
+        }
+
+        function fetchAnalysis() {
+            fetch('/get_analysis')
+            .then(response => response.json())
+            .then(data => {
+                const chatArea = document.getElementById('chat-area');
+                chatArea.innerHTML = ''; // Clear existing messages
+                data.analysis_list.forEach(analysis => {
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'message bot-message';
+                    botMessage.textContent = 'Bot: ' + analysis;
+                    chatArea.appendChild(botMessage);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching analysis:', error);
+            });
+        }
+
+        // Periodically fetch the analysis data
+        setInterval(fetchAnalysis, 5000); // Fetch every 5 seconds
+    </script>
+</head>
+<body onload="fetchAnalysis()">
+    <div class="container">
+        <header>
+            <h1>Play Poker</h1>
+        </header>
+        <main>
+            <!-- Game Section -->
+            <section class="game">
+                <h2>Game</h2>
+                <iframe src="http://localhost:8000" width="100%" height="600px"></iframe>
+            </section>
+
+            <!-- Chatbot Section -->
+            <section id="chatbot-section">
+                <h2>Chatbot Analysis</h2>
+                <div id="chat-area" class="chat-area"></div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

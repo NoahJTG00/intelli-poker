@@ -1,18 +1,18 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, session, redirect, url_for, render_template, request, flash, jsonify
 from dotenv import load_dotenv
 from flask_bcrypt import Bcrypt
 import openai
-import logging
 
 load_dotenv()
 
 bcrypt = Bcrypt()
 
+
 # Set your OpenAI API key here
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 openai.api_key = OPENAI_API_KEY
-print("SDKFJLDKFS", OPENAI_API_KEY, flush=True)
+
 analysis_list = []
 def create_app():
     app = Flask(__name__, template_folder="../frontend/templates", static_folder="../frontend/static")
@@ -70,6 +70,6 @@ def create_app():
     return app
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
     app = create_app()
     app.run()
+    
