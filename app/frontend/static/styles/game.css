@@ -74,18 +74,37 @@ main {
     padding: 10px;
 }
 
-#chatbot-section, #hand-history-section {
+/* #chatbot-section, #hand-history-section {
     background-color: white;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
+} */
 
 .chat-area, .hand-history-area {
-    height: 300px;
+    max-height: 300px;
     overflow-y: auto;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.message {
+    margin: 5px 0;
+}
+.hand-history-item {
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #eef;
+    border-radius: 3px;
+}
+.hand-history-stage {
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    margin-top: 10px;
+    padding-bottom: 5px;
 }
 
 iframe {

@@ -6,7 +6,24 @@
     <title>Play Poker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/game.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <script>
+<script>
+    function fetchHandHistory() {
+            fetch('/get_hand_history')
+            .then(response => response.json())
+            .then(data => {
+                const handHistoryArea = document.getElementById('hand-history-area');
+                handHistoryArea.innerHTML = '';
+                data.hand_history.forEach(entry => {
+                    const historyItem = document.createElement('div');
+                    historyItem.className = entry.startsWith('---') ? 'hand-history-stage' : 'hand-history-item';
+                    historyItem.textContent = entry;
+                    handHistoryArea.appendChild(historyItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching hand history:', error);
+            });
+        }
         function receiveMessage(data) {
             const chatArea = document.getElementById('chat-area');
 
@@ -22,7 +39,7 @@
             .then(response => response.json())
             .then(data => {
                 const chatArea = document.getElementById('chat-area');
-                chatArea.innerHTML = ''; // Clear existing messages
+                chatArea.innerHTML = '';
                 data.analysis_list.forEach(analysis => {
                     const botMessage = document.createElement('div');
                     botMessage.className = 'message bot-message';
@@ -34,10 +51,11 @@
                 console.error('Error fetching analysis:', error);
             });
         }
+    // Periodically fetch the hand history data
+    setInterval(fetchHandHistory, 1000); // Fetch every 0.1 seconds
+    setInterval(fetchAnalysis, 5000)
+</script>
 
-        // Periodically fetch the analysis data
-        setInterval(fetchAnalysis, 5000); // Fetch every 5 seconds
-    </script>
 </head>
 <body onload="fetchAnalysis()">
     <header class="header">
