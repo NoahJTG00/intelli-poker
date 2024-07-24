@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - IntelliPoker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/register.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
     <div class="register-container">
@@ -14,7 +16,7 @@
             <form method="POST" action="{{ url_for('game_bp.register') }}">
                 <div class="input-group">
                     <label for="username">Username</label>
-                    <input type="text" name="username" id="username" placeholder="user@gmail.com" required>
+                    <input type="text" name="username" id="username" placeholder="user" required>
                 </div>
                 <div class="input-group">
                     <label for="email">Email</label>
