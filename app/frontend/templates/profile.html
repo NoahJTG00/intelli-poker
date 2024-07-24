@@ -44,9 +44,8 @@
                 </div>
                 <div class="achievement-details">
                     <h2>Account Age Award</h2>
-                    <p id="accountAgeAward"></p>
+                    <p id="accountAgeAward"></p> 
                 </div>
-
             </div>
             <div class="achievement-item">
                 <div class="achievement-icon">
@@ -61,7 +60,6 @@
                     <span>20/31</span>
                 </div>
             </div>
-            
             <div class="achievement-item">
                 <div class="achievement-icon">
                     <img src="{{ url_for('static', filename='images/champion.jpeg') }}" alt="Champion Icon">
@@ -103,7 +101,7 @@
             </div>
             <form action="{{ url_for('game_bp.logout') }}" method="post">
                 <button type="submit" class="logout-button">Logout</button>
-            </form>  
+            </form>
              <!-- Manual Progress Reset Section -->
              <!---
              <div class="profile-item">
@@ -116,18 +114,25 @@
     <script src="{{ url_for('static', filename='scripts/profile.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
+            updateProfile();
+        });
+
+        function updateProfile() {
             fetch('/get_profile')
             .then(response => response.json())
             .then(data => {
+                console.log("Received data:", data);  // Debugging statement
                 document.getElementById('skillLevelSelect').value = data.skill_level || '';
                 document.getElementById('playerNotes').value = data.personal_notes || '';
                 document.getElementById('playGamesProgress').style.width = `${(data.play_consecutive_games / 3) * 100}%`;
                 document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/3`;
+                document.getElementById('accountAgeAward').innerText = data.account_age_award;
+                console.log("Account Age Award updated to:", data.account_age_award);  // Debugging statement
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
-        });
+        }
 
         function incrementProgress() {
             fetch('/increment_progress', {
@@ -145,20 +150,7 @@
             .then(data => {
                 console.log('Success:', data);
                 // Fetch and update the progress bar
-                updateProgress();
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        }
-
-        function updateProgress() {
-            fetch('/get_profile')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('playGamesProgress').style.width = `${(data.play_consecutive_games / 3) * 100}%`;
-                document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/3`;
-                document.getElementById('accountAgeAward').innerText = data.account_age_award;
+                updateProfile();
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -213,7 +205,7 @@
             .then(data => {
                 console.log('Success:', data);
                 // Fetch and update the progress bar
-                updateProgress();
+                updateProfile();
             })
             .catch((error) => {
                 console.error('Error:', error);
