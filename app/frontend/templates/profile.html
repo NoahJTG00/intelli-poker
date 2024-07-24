@@ -44,8 +44,9 @@
                 </div>
                 <div class="achievement-details">
                     <h2>Account Age Award</h2>
-                    <p id="accountAgeAward">Newbie</p>
+                    <p id="accountAgeAward"></p>
                 </div>
+
             </div>
             <div class="achievement-item">
                 <div class="achievement-icon">
@@ -120,8 +121,8 @@
             .then(data => {
                 document.getElementById('skillLevelSelect').value = data.skill_level || '';
                 document.getElementById('playerNotes').value = data.personal_notes || '';
-                document.getElementById('playGamesProgress').style.width = `${(data.play_consecutive_games / 5) * 100}%`;
-                document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/5`;
+                document.getElementById('playGamesProgress').style.width = `${(data.play_consecutive_games / 3) * 100}%`;
+                document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/3`;
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -155,8 +156,9 @@
             fetch('/get_profile')
             .then(response => response.json())
             .then(data => {
-                document.getElementById('playGamesProgress').style.width = `${(data.play_consecutive_games / 5) * 100}%`;
-                document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/5`;
+                document.getElementById('playGamesProgress').style.width = `${(data.play_consecutive_games / 3) * 100}%`;
+                document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/3`;
+                document.getElementById('accountAgeAward').innerText = data.account_age_award;
             })
             .catch((error) => {
                 console.error('Error:', error);

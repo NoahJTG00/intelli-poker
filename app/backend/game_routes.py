@@ -1,4 +1,6 @@
 from configparser import Error
+from datetime import datetime
+from sqlite3 import Date
 from flask import Blueprint, jsonify, request, render_template, redirect, url_for, flash, session
 from flask_login import login_required, current_user
 import subprocess
@@ -140,6 +142,32 @@ def logout():
     session.clear()
     return redirect(url_for('game_bp.login'))
 
+@game_bp.route('/reset_progress', methods=['POST'])
+def reset_progress():
+    if 'username' not in session:
+        return jsonify({"error": "User not logged in"}), 401
+
+    data = request.get_json()
+    try:
+        reset_value = int(data.get('reset_value', 0))  # Convert to int, default to 0 if not provided
+    except ValueError:
+        return jsonify({"error": "Invalid reset value"}), 400  # Handle invalid integer input
+
+    conn = get_db_connection()
+    cur = conn.cursor(dictionary=True)
+    try:
+        # Reset the progress for the "Play consecutive games" achievement to the provided value
+        cur.execute("UPDATE users SET play_consecutive_games = %s WHERE username = %s", (reset_value, session['username']))
+        conn.commit()
+        return jsonify({"message": "Progress reset successfully", "new_value": reset_value})
+    except Error as e:
+        print(e)
+        return jsonify({"error": "Failed to reset progress"}), 500
+    finally:
+        cur.close()
+        conn.close()
+
+
 @game_bp.route('/get_profile', methods=['GET'])
 def get_profile():
     if 'username' not in session:
@@ -151,7 +179,6 @@ def get_profile():
         cur.execute("SELECT skill_level, personal_notes, play_consecutive_games, created_at FROM users WHERE username = %s", (session['username'],))
         user_profile = cur.fetchone()
         if user_profile:
-            # Calculate account age in days
             created_at = user_profile['created_at']
             account_age_days = (datetime.now() - created_at).days
             user_profile['account_age_days'] = account_age_days
@@ -161,12 +188,14 @@ def get_profile():
                 user_profile['account_age_award'] = 'Veteran'
             elif account_age_days >= 180:
                 user_profile['account_age_award'] = 'Seasoned'
-            elif account_age_days >= 30:
+            elif account_age_days >= 1:
                 user_profile['account_age_award'] = 'Regular'
             else:
                 user_profile['account_age_award'] = 'Newbie'
 
+            print(user_profile) 
             return jsonify(user_profile)
+        print("Default profile returned")  # Debugging statement
         return jsonify({"skill_level": "", "personal_notes": "", "play_consecutive_games": 0, "account_age_days": 0, "account_age_award": "Newbie"})
     except Error as e:
         print(e)
