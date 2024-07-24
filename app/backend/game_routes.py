@@ -1,3 +1,4 @@
+from configparser import Error
 from flask import Blueprint, jsonify, request, render_template, redirect, url_for, flash, session
 from flask_login import login_required, current_user
 import subprocess
@@ -100,9 +101,9 @@ def login():
 
 @game_bp.route('/game', methods=['GET'])
 def play_game():
-    start_game()  # Starts the server if not running
+    start_game() 
     sleep(2)
-    return render_template('game.html')  # Renders the game page
+    return render_template('game.html')  
 
 # New profile route
 @game_bp.route('/instructions')
@@ -112,6 +113,56 @@ def instructions():
 @game_bp.route('/profile')
 def profile():
     return render_template('profile.html')
+
+@game_bp.route('/increment_progress', methods=['POST'])
+def increment_progress():
+    if 'username' not in session:
+        return jsonify({"error": "User not logged in"}), 401
+
+    conn = get_db_connection()
+    cur = conn.cursor(dictionary=True)
+    try:
+        # Increment the progress for the "Play consecutive games" achievement
+        cur.execute("UPDATE users SET play_consecutive_games = play_consecutive_games + 1 WHERE username = %s", (session['username'],))
+        conn.commit()
+        return jsonify({"message": "Progress incremented"})
+    except Error as e:
+        print(e)
+        return jsonify({"error": "Failed to increment progress"}), 500
+    finally:
+        cur.close()
+        conn.close()
+
+@game_bp.route('/get_profile', methods=['GET'])
+def get_profile():
+    if 'username' not in session:
+        return jsonify({"error": "User not logged in"}), 401
+
+    conn = get_db_connection()
+    cur = conn.cursor(dictionary=True)
+    try:
+        cur.execute("SELECT skill_level, personal_notes, play_consecutive_games FROM users WHERE username = %s", (session['username'],))
+        user_profile = cur.fetchone()
+        if user_profile:
+            return jsonify(user_profile)
+        return jsonify({"skill_level": "", "personal_notes": "", "play_consecutive_games": 0})
+    except Error as e:
+        print(e)
+        return jsonify({"error": "Failed to fetch profile"}), 500
+    finally:
+        cur.close()
+        conn.close()
+
+
+@game_bp.route('/save_profile', methods=['POST'])
+def save_profile():
+    data = request.get_json()
+    skill_level = data.get('skillLevel')
+    player_notes = data.get('playerNotes')
+    # helpful for debugging
+    #print("Skill Level:", skill_level)
+    #print("Player Notes:", player_notes)
+    return jsonify({"message": "Profile saved successfully!"})
 
 
 @game_bp.route("/logout", methods=['POST'])
