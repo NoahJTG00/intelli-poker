@@ -89,9 +89,9 @@ def login():
 
 @game_bp.route('/game', methods=['GET'])
 def play_game():
-    start_game()  # Starts the server if not running
+    start_game() 
     sleep(2)
-    return render_template('game.html')  # Renders the game page
+    return render_template('game.html')  
 
 # New profile route
 @game_bp.route('/instructions')
@@ -101,6 +101,17 @@ def instructions():
 @game_bp.route('/profile')
 def profile():
     return render_template('profile.html')
+
+
+@game_bp.route('/save_profile', methods=['POST'])
+def save_profile():
+    data = request.get_json()
+    skill_level = data.get('skillLevel')
+    player_notes = data.get('playerNotes')
+    # helpful for debugging
+    #print("Skill Level:", skill_level)
+    #print("Player Notes:", player_notes)
+    return jsonify({"message": "Profile saved successfully!"})
 
 
 @game_bp.route("/logout", methods=['POST'])

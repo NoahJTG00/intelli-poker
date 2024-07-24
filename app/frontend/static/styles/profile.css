@@ -88,6 +88,81 @@ nav a:hover {
     margin-bottom: 20px;
 }
 
+
+/* Additional CSS for new profile items */
+
+.profile-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa; /* Light grey background for distinction */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-item h2 {
+    font-size: 20px;
+    color: #4169e1; /* Royal blue to tie in header color */
+    margin-bottom: 10px;
+}
+
+.profile-item textarea {
+    width: 100%; /* Full width of its container */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 100px; /* Fixed height for uniformity */
+    resize: none; /* Disable resizing to maintain layout integrity */
+}
+
+/* Style for the skill level progress element */
+progress {
+    width: 100%; /* Full width to stretch across the container */
+    -webkit-appearance: none; /* Override default appearance */
+    appearance: none;
+    height: 20px;
+    border-radius: 5px;
+    color: #4169e1; /* Royal blue to tie in with header */
+}
+
+progress::-webkit-progress-bar {
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+progress::-webkit-progress-value {
+    background-color: #4169e1;
+    border-radius: 5px;
+}
+
+progress::-moz-progress-bar {
+    background-color: #4169e1;
+    border-radius: 5px;
+}
+
+select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.save-button {
+    background-color: #4169e1;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.save-button:hover {
+    background-color: #3547a8; /* Slightly darker blue for hover effect */
+}
+
 .achievement-icon img {
     width: 60px;
     height: 60px;

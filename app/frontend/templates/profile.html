@@ -19,7 +19,24 @@
     </header>
     <main>
         <div class="profile-section">
-            <h1>Your Profile</h1>
+            <h1>Progress</h1>
+            <!-- Skill Level Indicator -->
+            <div class="profile-item">
+                <h2>Skill Level</h2>
+                <select id="skillLevelSelect" name="skillLevel">
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                </select>
+            </div>
+            <!-- Personal Notes Section -->
+            <div class="profile-item">
+                <h2>Personal Notes</h2>
+                <textarea id="playerNotes" name="playerNotes" placeholder="Your strategies, goals, etc."></textarea>
+                <button onclick="saveNotes()" class="save-button">Save Notes</button>
+            </div>
+        </div>
+        <div class="profile-section">
+            <h1>Awards</h1>
             <div class="achievement-item">
                 <div class="achievement-icon">
                     <img src="{{ url_for('static', filename='images/streak.jpeg') }}" alt="Streak Icon">
@@ -78,5 +95,28 @@
         </div>
     </main>
     <script src="{{ url_for('static', filename='scripts/profile.js') }}"></script>
+    <script>
+        function saveNotes() {
+            var skillLevel = document.getElementById('skillLevelSelect').value;
+            var playerNotes = document.getElementById('playerNotes').value;
+    
+            fetch('/save_profile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ skillLevel: skillLevel, playerNotes: playerNotes })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Profile saved successfully!');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+    
 </body>
 </html>
