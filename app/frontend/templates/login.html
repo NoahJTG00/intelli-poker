@@ -5,21 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - IntelliPoker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/login.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
     <div class="login-container">
         <div class="login-form">
             <h1>Welcome to IntelliPoker!</h1>
-            <p>Don't have an account? <a href="{{ url_for('game_bp.register') }}">Sign up</a>
+            <p>Don't have an account? <a href="{{ url_for('game_bp.register') }}">Sign up</a></p>
             <form method="POST" action="{{ url_for('game_bp.login') }}">
                 <div class="input-group">
                     <label for="username">Username</label>
+                    <i class="fas fa-user icon"></i> <!-- Font Awesome User Icon -->
                     <input type="text" name="username" id="username" placeholder="user@gmail.com" required>
                 </div>
+                
                 <div class="input-group">
                     <label for="password">Password</label>
+                    <i class="fas fa-lock icon"></i> <!-- Font Awesome Lock Icon -->
                     <input type="password" name="password" id="password" placeholder="••••••••" required>
-                </div>
+                </div>                
                 <div class="options">
                     <div class="remember-me">
                         <input type="checkbox" id="remember" name="remember">
@@ -36,7 +41,7 @@
             </div>
         </div>
         <div class="login-illustration">
-            <img src="{{ url_for('static', filename='/images/stuff.jpg') }}" alt="Illustration">
+            <img src="{{ url_for('static', filename='images/stuff.jpg') }}" alt="Illustration">
         </div>
     </div>
 </body>

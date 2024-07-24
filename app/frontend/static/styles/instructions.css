@@ -34,17 +34,6 @@ nav a:hover {
     color: #ddd;
 }
 
-.header nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 10px;
-    font-size: 18px;
-}
-
-.header nav a:hover {
-    text-decoration: underline;
-}
-
 .instructions-container {
     display: flex;
     margin: 20px;
