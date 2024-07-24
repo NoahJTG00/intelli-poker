@@ -12,7 +12,7 @@ bcrypt = Bcrypt()
 # Set your OpenAI API key here
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 openai.api_key = OPENAI_API_KEY
-
+print(OPENAI_API_KEY, flush=True)
 analysis_list = []
 def create_app():
     app = Flask(__name__, template_folder="../frontend/templates", static_folder="../frontend/static")
@@ -35,10 +35,11 @@ def create_app():
     def chat():
         data = request.get_json()
         cards = data.get('cards')
+        print(cards, flush=True)
         game_state = data.get('game_state')
 
         response = openai.chat.completions.create(
-             model="gpt-4",
+             model="gpt-4o",
     messages=[
         {"role": "system", "content": "You are a poker expert providing Game Theory Optimal (GTO) analysis."},
         {"role": "user", "content": f"""You are playing in a 6-handed Texas Hold'em game. Here is the current game state:

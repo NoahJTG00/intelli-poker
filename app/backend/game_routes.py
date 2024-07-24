@@ -4,6 +4,7 @@ import subprocess
 import os
 from . import bcrypt
 from flask_bcrypt import Bcrypt
+from time import sleep
 from .utils import get_db_connection
 import socket
 
@@ -89,6 +90,7 @@ def login():
 @game_bp.route('/game', methods=['GET'])
 def play_game():
     start_game()  # Starts the server if not running
+    sleep(2)
     return render_template('game.html')  # Renders the game page
 
 # New profile route
