@@ -12,7 +12,7 @@
         <div class="logo">Intelli-Poker</div>
         <nav>
             <a href="{{ url_for('main_bp.index') }}">Home</a>
-            <a href="{{ url_for('game_bp.play_game') }}">Start Game</a>
+            <a href="{{ url_for('game_bp.play_game') }}" onclick="incrementProgress()">Start Game</a>
             <a href="{{ url_for('game_bp.instructions') }}">Instructions</a>
             <a href="{{ url_for('game_bp.profile') }}">Profile</a>
         </nav>
@@ -84,11 +84,11 @@
                     <h2>Overachiever</h2>
                     <p>Play 5 consecutive games</p>
                     <div class="progress-bar">
-                        <div class="progress" style="width: 80%;"></div>
+                        <div class="progress" id="playGamesProgress" style="width: 20%;"></div>
                     </div>
-                    <span>4/5</span>
+                    <span id="playGamesCount">1/5</span>
                 </div>
-            </div>
+            </div>            
             <form action="{{ url_for('game_bp.logout') }}" method="post">
                 <button type="submit" class="logout-button">Logout</button>
             </form>            
@@ -96,10 +96,59 @@
     </main>
     <script src="{{ url_for('static', filename='scripts/profile.js') }}"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            fetch('/get_profile')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('skillLevelSelect').value = data.skill_level || '';
+                document.getElementById('playerNotes').value = data.personal_notes || '';
+                document.getElementById('playGamesProgress').style.width = `${(data.play_consecutive_games / 5) * 100}%`;
+                document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/5`;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+
+        function incrementProgress() {
+            fetch('/increment_progress', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                // Fetch and update the progress bar
+                updateProgress();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        function updateProgress() {
+            fetch('/get_profile')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('playGamesProgress').style.width = `${(data.play_consecutive_games / 5) * 100}%`;
+                document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/5`;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
         function saveNotes() {
             var skillLevel = document.getElementById('skillLevelSelect').value;
             var playerNotes = document.getElementById('playerNotes').value;
-    
+
             fetch('/save_profile', {
                 method: 'POST',
                 headers: {
@@ -107,16 +156,21 @@
                 },
                 body: JSON.stringify({ skillLevel: skillLevel, playerNotes: playerNotes })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 console.log('Success:', data);
-                alert('Profile saved successfully!');
+                alert(data.message || 'Profile saved successfully!');
             })
             .catch((error) => {
                 console.error('Error:', error);
+                alert('Failed to save profile. Please try again.');
             });
         }
     </script>
-    
 </body>
 </html>

@@ -44,7 +44,7 @@
         <div class="logo">Intelli-Poker</div>
         <nav>
             <a href="{{ url_for('main_bp.index') }}">Home</a>
-            <a href="{{ url_for('game_bp.play_game') }}">Start Game</a>
+            <a href="{{ url_for('game_bp.play_game') }}" onclick="incrementProgress()">Start Game</a>
             <a href="{{ url_for('game_bp.instructions') }}">Instructions</a>
             <a href="{{ url_for('game_bp.profile') }}">Profile</a>
         </nav>
@@ -67,5 +67,77 @@
             </div>
         </main>
     </div>
+    <script>
+        function incrementProgress() {
+            fetch('/increment_progress', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                // Fetch and update the progress bar
+                updateProgress();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    
+        function updateProgress() {
+            fetch('/get_profile')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('playGamesProgress').style.width = `${(data.play_consecutive_games / 5) * 100}%`;
+                document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/5`;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>    
+    <script>
+        function incrementProgress() {
+            fetch('/increment_progress', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                // Fetch and update the progress bar
+                updateProgress();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    
+        function updateProgress() {
+            fetch('/get_profile')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('playGamesProgress').style.width = `${(data.play_consecutive_games / 5) * 100}%`;
+                document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/5`;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>    
 </body>
 </html>
