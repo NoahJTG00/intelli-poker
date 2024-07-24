@@ -27,6 +27,7 @@ def get_hand_history():
 @game_bp.route('/start', methods=['GET', 'POST'])
 def start_game():
     if not is_server_running('127.0.0.1', 8000):
+        print("------hHHEREH-----", flush=True)
         start_server()
         return jsonify({'status': 'Server started'}), 200
     return jsonify({'status': 'Server already running'}), 200
@@ -101,7 +102,7 @@ def login():
 
 @game_bp.route('/game', methods=['GET'])
 def play_game():
-    start_game() 
+    start_game()
     sleep(2)
     return render_template('game.html')  
 
