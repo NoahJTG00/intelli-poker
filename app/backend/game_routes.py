@@ -122,26 +122,6 @@ def increment_progress():
         cur.close()
         conn.close()
 
-@game_bp.route('/get_profile', methods=['GET'])
-def get_profile():
-    if 'username' not in session:
-        return jsonify({"error": "User not logged in"}), 401
-
-    conn = get_db_connection()
-    cur = conn.cursor(dictionary=True)
-    try:
-        cur.execute("SELECT skill_level, personal_notes, play_consecutive_games FROM users WHERE username = %s", (session['username'],))
-        user_profile = cur.fetchone()
-        if user_profile:
-            return jsonify(user_profile)
-        return jsonify({"skill_level": "", "personal_notes": "", "play_consecutive_games": 0})
-    except Error as e:
-        print(e)
-        return jsonify({"error": "Failed to fetch profile"}), 500
-    finally:
-        cur.close()
-        conn.close()
-
 
 @game_bp.route('/save_profile', methods=['POST'])
 def save_profile():
@@ -159,3 +139,38 @@ def logout():
     # Your logout logic here
     session.clear()
     return redirect(url_for('game_bp.login'))
+
+@game_bp.route('/get_profile', methods=['GET'])
+def get_profile():
+    if 'username' not in session:
+        return jsonify({"error": "User not logged in"}), 401
+
+    conn = get_db_connection()
+    cur = conn.cursor(dictionary=True)
+    try:
+        cur.execute("SELECT skill_level, personal_notes, play_consecutive_games, created_at FROM users WHERE username = %s", (session['username'],))
+        user_profile = cur.fetchone()
+        if user_profile:
+            # Calculate account age in days
+            created_at = user_profile['created_at']
+            account_age_days = (datetime.now() - created_at).days
+            user_profile['account_age_days'] = account_age_days
+
+            # Determine the award based on account age
+            if account_age_days >= 365:
+                user_profile['account_age_award'] = 'Veteran'
+            elif account_age_days >= 180:
+                user_profile['account_age_award'] = 'Seasoned'
+            elif account_age_days >= 30:
+                user_profile['account_age_award'] = 'Regular'
+            else:
+                user_profile['account_age_award'] = 'Newbie'
+
+            return jsonify(user_profile)
+        return jsonify({"skill_level": "", "personal_notes": "", "play_consecutive_games": 0, "account_age_days": 0, "account_age_award": "Newbie"})
+    except Error as e:
+        print(e)
+        return jsonify({"error": "Failed to fetch profile"}), 500
+    finally:
+        cur.close()
+        conn.close()
