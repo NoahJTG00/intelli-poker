@@ -99,8 +99,8 @@ def profile():
     return render_template('profile.html')
 
 
-@game_bp.route("/logout")
+@game_bp.route("/logout", methods=['POST'])
 def logout():
+    # Your logout logic here
     session.clear()
-    flash("You are now logged out", "success")
-    return redirect(url_for("game_bp.login"))  
+    return redirect(url_for('game_bp.login'))

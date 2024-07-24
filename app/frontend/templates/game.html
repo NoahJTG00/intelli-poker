@@ -39,22 +39,31 @@
     </script>
 </head>
 <body onload="fetchAnalysis()">
+    <header class="header">
+        <div class="logo">Intelli-Poker</div>
+        <nav>
+            <a href="{{ url_for('main_bp.index') }}">Home</a>
+            <a href="{{ url_for('game_bp.play_game') }}">Start Game</a>
+            <a href="{{ url_for('game_bp.instructions') }}">Instructions</a>
+            <a href="{{ url_for('game_bp.profile') }}">Profile</a>
+        </nav>
+    </header>
     <div class="container">
-        <header>
-            <h1>Play Poker</h1>
-        </header>
         <main>
-            <!-- Game Section -->
             <section class="game">
                 <h2>Game</h2>
                 <iframe src="http://localhost:8000" width="100%" height="600px"></iframe>
             </section>
-
-            <!-- Chatbot Section -->
-            <section id="chatbot-section">
-                <h2>Chatbot Analysis</h2>
-                <div id="chat-area" class="chat-area"></div>
-            </section>
+            <div class="analysis-sections">
+                <section id="chatbot-section">
+                    <h2>Chatbot Analysis</h2>
+                    <div id="chat-area" class="chat-area"></div>
+                </section>
+                <section id="hand-history-section">
+                    <h2>Hand History</h2>
+                    <div id="hand-history-area" class="hand-history-area"></div>
+                </section>
+            </div>
         </main>
     </div>
 </body>

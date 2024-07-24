@@ -6,17 +6,16 @@ body {
 }
 
 .header {
-    background-color: #4a90e2;
+    background-color: #4169e1; /* Royal blue background */
     color: white;
-    padding: 10px 0;
-    text-align: center;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 1rem 2rem;
 }
 
 .header .logo {
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: bold;
 }
 
@@ -29,6 +28,41 @@ body {
     text-decoration: none;
     padding: 0 15px;
 }
+
+nav {
+    display: flex;
+}
+
+nav a {
+    color: white;
+    padding: 0 1rem;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+nav a:hover {
+    color: #ddd;
+}
+
+.logout-button {
+    background-color: #dc3545; /* A strong red for high visibility */
+    color: white; /* White text for high contrast and readability */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 20px auto; /* Center button horizontally, adjust vertical spacing as needed */
+    display: block; /* Ensures it spans the width it needs */
+    width: fit-content; /* Adjusts width to content, keeping the button compact */
+    transition: background-color 0.2s; /* Smooth transition for hover effect */
+}
+
+.logout-button:hover {
+    background-color: #c82333; /* A darker red for hover to provide interactive feedback */
+}
+
+
 
 .header nav a:hover {
     text-decoration: underline;
