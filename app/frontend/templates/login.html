@@ -16,14 +16,18 @@
             <form method="POST" action="{{ url_for('game_bp.login') }}">
                 <div class="input-group">
                     <label for="username">Username</label>
-                    <i class="fas fa-user icon"></i> <!-- Font Awesome User Icon -->
-                    <input type="text" name="username" id="username" placeholder="user@gmail.com" required>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user icon"></i> <!-- Font Awesome User Icon -->
+                        <input type="text" name="username" id="username" placeholder="user@gmail.com" required>
+                    </div>
                 </div>
-                
+
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <i class="fas fa-lock icon"></i> <!-- Font Awesome Lock Icon -->
-                    <input type="password" name="password" id="password" placeholder="••••••••" required>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock icon"></i> <!-- Font Awesome Lock Icon -->
+                        <input type="password" name="password" id="password" placeholder="••••••••" required>
+                    </div>
                 </div>                
                 <div class="options">
                     <div class="remember-me">
