@@ -91,7 +91,14 @@
             </div>            
             <form action="{{ url_for('game_bp.logout') }}" method="post">
                 <button type="submit" class="logout-button">Logout</button>
-            </form>            
+            </form>  
+             <!-- Manual Progress Reset Section -->
+             <!---
+             <div class="profile-item">
+                <h2>Reset Progress</h2>
+                <input type="number" id="resetValue" placeholder="Enter reset value" min="0" max="5">
+                <button onclick="resetProgress()" class="reset-button">Reset Progress</button>
+            </div>-->
         </div>
     </main>
     <script src="{{ url_for('static', filename='scripts/profile.js') }}"></script>
@@ -171,6 +178,35 @@
                 alert('Failed to save profile. Please try again.');
             });
         }
+        
+        // UNCOMMENT ONLY TO CLICK BUTTON TO RESET PROGRESS
+        /***
+        function resetProgress() {
+            var resetValue = document.getElementById('resetValue').value;
+
+            fetch('/reset_progress', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ reset_value: resetValue })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                // Fetch and update the progress bar
+                updateProgress();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+        ***/
     </script>
 </body>
 </html>
