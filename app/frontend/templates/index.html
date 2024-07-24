@@ -20,6 +20,14 @@
 
     <div class="welcome-section">
         <h1>Welcome back, ready for your next game?</h1>
+        <button id="toggleButton" class="button" onclick="toggleGuide()">Show Guide</button>
+        <div id="quickGuide" style="display:none;">
+            <p>Step 1: Choose your game from the options below.</p>
+            <p>Step 2: Check the instructions to brush up on the rules.</p>
+            <p>Step 3: Hit 'Start Game' and enjoy!</p>
+            <p>Step 4: Check your profile to win medals & view leadership board.</p>
+        </div>
+        <!-- <a href="{{ url_for('game_bp.profile') }}" class="button">Profile</a> -->
     </div>
 
     <div class="cards-section">
@@ -63,5 +71,18 @@
     <footer class="footer">
         <p>&copy; 2024 Intelli-Poker. All rights reserved.</p>
     </footer>
+    <script>
+        function toggleGuide() {
+            var guide = document.getElementById("quickGuide")
+            var button = document.getElementById("toggleButton");
+            if (guide.style.display === "none") {
+                guide.style.display = "block";
+                button.textContent = 'Hide Guide';
+            } else {
+                guide.style.display = "none";
+                button.textContent = 'Show Guide';
+            }
+        }
+    </script>
 </body>
 </html>
