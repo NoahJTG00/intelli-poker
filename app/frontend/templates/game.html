@@ -74,8 +74,13 @@
                 <iframe src="http://localhost:8000" width="100%" height="600px"></iframe>
             </section>
             <div class="analysis-sections">
-                <section id="chatbot-section">
-                    <h2>Chatbot Analysis</h2>
+                <section id="chatbot-section" class="chatbot-section">
+                    <div class="header-with-button">
+                        <h2>Chatbot Analysis</h2>
+                        <button id="ask-ai-btn" class="ask-ai-btn">
+                            <img src="{{ url_for('static', filename='images/ask_ai.png') }}" alt="Ask AI" class="ask-ai-icon">
+                        </button>
+                    </div>
                     <div id="chat-area" class="chat-area"></div>
                 </section>
                 <section id="hand-history-section">
@@ -89,6 +94,7 @@
         document.addEventListener('DOMContentLoaded', (event) => {
             console.log("Page loaded, calling incrementProgress");
             incrementProgress();
+            document.getElementById('ask-ai-btn').addEventListener('click', askAI);
         });
 
         function incrementProgress() {
@@ -132,6 +138,21 @@
                 particleCount: 100,
                 spread: 70,
                 origin: { y: 0.6 }
+            });
+        }
+
+        function askAI() {
+            fetch('/get_help')
+            .then(response => response.json())
+            .then(data => {
+                const chatArea = document.getElementById('chat-area');
+                const botMessage = document.createElement('div');
+                botMessage.className = 'message bot-message';
+                botMessage.textContent = 'AI: ' + data.hint;
+                chatArea.appendChild(botMessage);
+            })
+            .catch(error => {
+                console.error('Error getting help from AI:', error);
             });
         }
     </script>

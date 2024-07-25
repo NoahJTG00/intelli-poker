@@ -102,3 +102,26 @@ iframe {
     height: 600px;
     border: none;
 }
+
+.header-with-button {
+    display: flex;
+    align-items: center;
+}
+
+.header-with-button h2 {
+    margin: 0;
+    flex-grow: 1;
+}
+
+.ask-ai-btn {
+    padding: 0; /* Remove padding */
+    border: none; /* Remove border */
+    background: none; /* Remove background */
+    cursor: pointer;
+    margin-left: 20px; /* Add margin to shift the button to the right */
+}
+
+.ask-ai-btn .ask-ai-icon {
+    width: 80px; /* Adjust the size as needed */
+    height: auto;
+}
