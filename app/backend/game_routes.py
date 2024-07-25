@@ -75,6 +75,40 @@ def register():
 
     return render_template('register.html')
 
+@game_bp.route('/log_game_completion', methods=['POST'])
+def log_game_completion():
+    if 'username' not in session:
+        return jsonify({"error": "User not logged in"}), 401
+
+    conn = get_db_connection()
+    cur = conn.cursor(dictionary=True)
+    try:
+        cur.execute("SELECT daily_streak, last_play_date FROM users WHERE username = %s", (session['username'],))
+        user = cur.fetchone()
+        if user:
+            last_play_date = user['last_play_date']
+            current_date = datetime.now().date()
+
+            if last_play_date is None or (current_date - last_play_date).days > 1:
+                # If more than a day has passed since the last play, reset the streak
+                cur.execute("UPDATE users SET daily_streak = 1, last_play_date = %s WHERE username = %s", (current_date, session['username']))
+            elif (current_date - last_play_date).days == 1:
+                # If the user played yesterday, increment the streak
+                new_streak = user['daily_streak'] + 1
+                cur.execute("UPDATE users SET daily_streak = %s, last_play_date = %s WHERE username = %s", (new_streak, current_date, session['username']))
+            else:
+                # If the user played today already, do nothing
+                pass
+            conn.commit()
+            return jsonify({"message": "Game logged successfully", "daily_streak": new_streak})
+        return jsonify({"error": "User not found"}), 404
+    except Error as e:
+        print(e)
+        return jsonify({"error": "Failed to log game completion"}), 500
+    finally:
+        cur.close()
+        conn.close()
+
 @game_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if "logged_in" in session:
@@ -126,9 +160,20 @@ def increment_progress():
     cur = conn.cursor(dictionary=True)
     try:
         # Increment the progress for the "Play consecutive games" achievement
-        cur.execute("UPDATE users SET play_consecutive_games = play_consecutive_games + 1 WHERE username = %s", (session['username'],))
-        conn.commit()
-        return jsonify({"message": "Progress incremented"})
+        cur.execute("SELECT play_consecutive_games, overachiever_notified FROM users WHERE username = %s", (session['username'],))
+        user = cur.fetchone()
+
+        if user:        
+            new_count = user['play_consecutive_games'] + 1
+            overachiever_notified = user['overachiever_notified']
+
+            cur.execute("UPDATE users SET play_consecutive_games = %s WHERE username = %s", (new_count, session['username']))
+
+            if new_count == 3 and not overachiever_notified:
+                cur.execute("UPDATE users SET overachiever_notified = TRUE WHERE username = %s", (session['username'],))
+            conn.commit()
+            return jsonify({"message": "Progress incremented", "play_consecutive_games": new_count, "overachiever_notified": new_count == 3 and not overachiever_notified})
+        return jsonify({"error": "User not found"}), 404
     except Error as e:
         print(e)
         return jsonify({"error": "Failed to increment progress"}), 500
@@ -163,12 +208,11 @@ def reset_progress():
     try:
         reset_value = int(data.get('reset_value', 0))  # Convert to int, default to 0 if not provided
     except ValueError:
-        return jsonify({"error": "Invalid reset value"}), 400  # Handle invalid integer input
+        return jsonify({"error": "Invalid reset value"}), 400  
 
     conn = get_db_connection()
     cur = conn.cursor(dictionary=True)
     try:
-        # Reset the progress for the "Play consecutive games" achievement to the provided value
         cur.execute("UPDATE users SET play_consecutive_games = %s WHERE username = %s", (reset_value, session['username']))
         conn.commit()
         return jsonify({"message": "Progress reset successfully", "new_value": reset_value})
@@ -188,7 +232,7 @@ def get_profile():
     conn = get_db_connection()
     cur = conn.cursor(dictionary=True)
     try:
-        cur.execute("SELECT skill_level, personal_notes, play_consecutive_games, created_at FROM users WHERE username = %s", (session['username'],))
+        cur.execute("SELECT skill_level, personal_notes, play_consecutive_games, created_at, first_profile_visit, daily_streak, overachiever_notified FROM users WHERE username = %s", (session['username'],))
         user_profile = cur.fetchone()
         if user_profile:
             created_at = user_profile['created_at']
@@ -198,17 +242,26 @@ def get_profile():
             # Determine the award based on account age
             if account_age_days >= 365:
                 user_profile['account_age_award'] = 'Veteran'
-            elif account_age_days >= 180:
+            elif account_age_days >= 2:
                 user_profile['account_age_award'] = 'Seasoned'
             elif account_age_days >= 1:
                 user_profile['account_age_award'] = 'Regular'
             else:
                 user_profile['account_age_award'] = 'Newbie'
+            
+            first_visit = user_profile.get('first_profile_visit', True)
+            if first_visit:
+                # Update the database to mark the first visit as completed
+                cur.execute("UPDATE users SET first_profile_visit = FALSE WHERE username = %s", (session['username'],))
+                conn.commit()
+                user_profile['first_profile_visit'] = True
+            else:
+                user_profile['first_profile_visit'] = False
 
             #print(user_profile) 
             return jsonify(user_profile)
         #print("Default profile returned")  # Debugging statement
-        return jsonify({"skill_level": "", "personal_notes": "", "play_consecutive_games": 0, "account_age_days": 0, "account_age_award": "Newbie"})
+        return jsonify({"skill_level": "", "personal_notes": "", "play_consecutive_games": 0, "account_age_days": 0, "account_age_award": "Newbie", "first_profile_visit": False, "daily_streak": 0, "overachiever_notified": False})
     except Error as e:
         print(e)
         return jsonify({"error": "Failed to fetch profile"}), 500

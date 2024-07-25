@@ -90,11 +90,40 @@
             </div>
         </main>
     </div>
+
+    <!-- The Modal -->
+    <div id="ask-ai-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="ai-response">Waiting for AI response...</p>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             console.log("Page loaded, calling incrementProgress");
             incrementProgress();
-            document.getElementById('ask-ai-btn').addEventListener('click', askAI);
+
+            var modal = document.getElementById("ask-ai-modal");
+
+            var btn = document.getElementById("ask-ai-btn");
+
+            var span = document.getElementsByClassName("close")[0];
+
+            btn.onclick = function() {
+                modal.style.display = "block";
+                askAI(); // Call the API when the modal is opened
+            }
+
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
         });
 
         function incrementProgress() {
@@ -142,17 +171,26 @@
         }
 
         function askAI() {
-            fetch('/get_help')
+            const cards = "your cards here"; // Replace with the actual cards
+            const game_state = "your game state here"; // Replace with the actual game state
+
+            fetch('/ask_ai', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    cards: cards,
+                    game_state: game_state
+                })
+            })
             .then(response => response.json())
             .then(data => {
-                const chatArea = document.getElementById('chat-area');
-                const botMessage = document.createElement('div');
-                botMessage.className = 'message bot-message';
-                botMessage.textContent = 'AI: ' + data.hint;
-                chatArea.appendChild(botMessage);
+                document.getElementById("ai-response").innerText = data.response;
             })
             .catch(error => {
                 console.error('Error getting help from AI:', error);
+                document.getElementById("ai-response").innerText = "An error occurred. Please try again.";
             });
         }
     </script>

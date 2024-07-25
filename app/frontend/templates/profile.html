@@ -13,7 +13,7 @@
         <div class="logo">Intelli-Poker</div>
         <nav>
             <a href="{{ url_for('main_bp.index') }}">Home</a>
-            <a href="{{ url_for('game_bp.play_game') }}">Start Game</a>
+            <a href="{{ url_for('game_bp.play_game') }}" onclick="logGameCompletion()">Start Game</a>
             <a href="{{ url_for('game_bp.instructions') }}">Instructions</a>
             <a href="{{ url_for('game_bp.profile') }}">Profile</a>
         </nav>
@@ -53,9 +53,9 @@
                     <h2>Wildfire</h2>
                     <p>Maintain a 31-day streak</p>
                     <div class="progress-bar">
-                        <div class="progress" style="width: 65%;"></div>
+                        <div class="progress" id="dailyStreakProgress" style="width: 0%;"></div>
                     </div>
-                    <span>20/31</span>
+                    <span id="dailyStreakCount">0/31</span>
                 </div>
             </div>
             <div class="achievement-item">
@@ -66,9 +66,9 @@
                     <h2>Champion</h2>
                     <p>Double your initial bet</p>
                     <div class="progress-bar">
-                        <div class="progress" style="width: 66%;"></div>
+                        <div class="progress" style="width: 0%;"></div>
                     </div>
-                    <span>2/3</span>
+                    <span>0/3</span>
                 </div>
             </div>
             <div class="achievement-item">
@@ -79,9 +79,9 @@
                     <h2>Top Hand</h2>
                     <p>Achieve a Royal Flush, Straight Flush, Four of a Kind, or Full House</p>
                     <div class="progress-bar">
-                        <div class="progress" style="width: 66%;"></div>
+                        <div class="progress" style="width: 0%;"></div>
                     </div>
-                    <span>6/9</span>
+                    <span>0/9</span>
                 </div>
             </div>
             <div class="achievement-item">
@@ -118,21 +118,36 @@
             fetch('/get_profile')
             .then(response => response.json())
             .then(data => {
-                console.log("Received data:", data);  // Debugging statement
                 document.getElementById('skillLevelSelect').value = data.skill_level || '';
                 document.getElementById('playerNotes').value = data.personal_notes || '';
                 document.getElementById('playGamesProgress').style.width = `${(data.play_consecutive_games / 3) * 100}%`;
                 document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/3`;
                 document.getElementById('accountAgeAward').innerText = data.account_age_award;
-                console.log("Account Age Award updated to:", data.account_age_award);  // Debugging statement
+                document.getElementById('dailyStreakProgress').style.width = `${(data.daily_streak / 31) * 100}%`;
+                document.getElementById('dailyStreakCount').innerText = `${data.daily_streak}/31`;
 
-                // Store data to check later
+                if (data.first_profile_visit) {
+                    notifyUser(`Congratulations! You earned the ${data.account_age_award} award!`);
+                    triggerConfetti();
+                }
+
+                if (data.play_consecutive_games == 3) {
+                    notifyUser("Congratulations! You've achieved the Overachiever award!");
+                    triggerConfetti();
+                }
+
+                if (data.daily_streak == 31) {
+                    notifyUser("Congratulations! You've maintained a 31-day streak!");
+                    triggerConfetti();
+                }
+
                 window.profileData = data;
             })
             .catch(error => {
-                console.error('Error:', error);
+                    console.error('Error:', error);
             });
         }
+
 
         function saveNotes() {
             var skillLevel = document.getElementById('skillLevelSelect').value;
@@ -161,6 +176,7 @@
             });
         }
 
+        /***
         function updateProgress(playConsecutiveGames) {
             const progress = (playConsecutiveGames / 3) * 100;
             document.getElementById('playGamesProgress').style.width = `${progress}%`;
@@ -171,6 +187,34 @@
                 console.log("Triggering confetti!");  // Debugging statement
                 triggerConfetti();
             }
+        }
+        ***/
+
+        function logGameCompletion() {
+            fetch('/log_game_completion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error(data.error);
+                    return;
+                }
+
+                document.getElementById('dailyStreakProgress').style.width = `${(data.daily_streak / 31) * 100}%`;
+                document.getElementById('dailyStreakCount').innerText = `${data.daily_streak}/31`;
+
+                if (data.daily_streak == 31) {
+                    notifyUser("Congratulations! You've maintained a 31-day streak!");
+                    triggerConfetti();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
 
         function triggerConfetti() {
@@ -206,7 +250,7 @@
             console.log("Notifying user:", message);  // Debugging statement
             const notification = document.createElement('div');
             notification.className = 'notification';
-            notification.innerHTML = `<strong> </strong> ${message}`;
+            notification.innerHTML = `<strong>Congratulations!</strong> ${message}`;
 
             document.body.appendChild(notification);
 
@@ -216,7 +260,7 @@
         }
 
         // UNCOMMENT ONLY TO CLICK BUTTON TO RESET PROGRESS
-        /***
+        
         function resetProgress() {
             var resetValue = document.getElementById('resetValue').value;
 
@@ -242,7 +286,7 @@
                 console.error('Error:', error);
             });
         }
-        ***/
+        
     </script>
 </body>
 </html>

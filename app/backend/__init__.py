@@ -67,6 +67,28 @@ def create_app():
     @app.route('/get_analysis', methods=['GET'])
     def get_analysis():
         return jsonify({'analysis_list': analysis_list})
+    
+    @app.route('/ask_ai', methods=['POST'])
+    def ask_ai():
+        try:
+            data = request.get_json()
+            cards = data.get('cards')
+            game_state = data.get('game_state')
+
+            if not cards or not game_state:
+                return jsonify({'error': 'Cards and game state are required.'}), 400
+
+            response = openai.Completion.create(
+                engine="gpt-4",
+                prompt=f"You are a poker expert. Based on the following game state and player's cards, provide a hint for what the player should do next (call, fold, or raise):\n\nGame State: {game_state}\nPlayer's Cards: {cards}",
+                max_tokens=100
+            )
+
+            response_text = response.choices[0].text.strip()
+            return jsonify({'response': response_text})
+        except Exception as e:
+            print(f"Error: {e}", flush=True)
+            return jsonify({'error': str(e)}), 500
 
     return app
 
