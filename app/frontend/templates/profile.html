@@ -127,32 +127,13 @@
 
 
                 if (data.first_profile_visit) {
-                    notifyUser(`Congratulations! You earned the ${data.account_age_award} award!`);
+                    notifyUser(`You earned the ${data.account_age_award} award!`);
                     triggerConfetti();
                 }
 
                 if (data.play_consecutive_games == 1 && data.overachiever_notified) {
                     notifyUser("You've achieved the Overachiever award!");
                     triggerConfetti();
-                    fetch('/update_overachiever_notified', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ username: data.username })
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(updateData => {
-                        console.log('Overachiever notified status updated:', updateData);
-                    })
-                    .catch(error => {
-                        console.error('Error updating overachiever notified status:', error);
-                    });
                 }
 
                 if (data.daily_streak == 31) {
@@ -277,6 +258,18 @@
             setTimeout(() => {
                 notification.remove();
             }, 4000);
+        }
+
+        function showCustomNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'custom-notification';
+            notification.innerText = message;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
         }
 
         // UNCOMMENT ONLY TO CLICK BUTTON TO RESET PROGRESS
