@@ -168,11 +168,11 @@
             })
             .then(data => {
                 console.log('Success:', data);
-                alert(data.message || 'Profile saved successfully!');
+                showCustomNotification(data.message || 'Profile saved successfully!');
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Failed to save profile. Please try again.');
+                showCustomNotification('Failed to save profile. Please try again.');
             });
         }
 

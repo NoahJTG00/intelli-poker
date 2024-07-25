@@ -99,19 +99,8 @@ def log_game_completion():
             else:
                 # If the user played today already, do nothing
                 pass
-        
-            # Check and update the first game played and overachiever notified flags
-            first_game_played = user['first_game_played']
-            overachiever_notified = user['overachiever_notified']
-            if not first_game_played:
-                cur.execute("UPDATE users SET first_game_played = TRUE WHERE username = %s", (session['username'],))
-                first_game_played = True
-            if not overachiever_notified and first_game_played:
-                cur.execute("UPDATE users SET overachiever_notified = TRUE WHERE username = %s", (session['username'],))
-                overachiever_notified = True
-
             conn.commit()
-            return jsonify({"message": "Game logged successfully", "daily_streak": new_streak, "first_game_played": first_game_played, "overachiever_notified": overachiever_notified})
+            return jsonify({"message": "Game logged successfully", "daily_streak": new_streak})
         return jsonify({"error": "User not found"}), 404
     except Error as e:
         print(e)
@@ -217,13 +206,27 @@ def increment_progress():
 
 @game_bp.route('/save_profile', methods=['POST'])
 def save_profile():
+    if 'username' not in session:
+        return jsonify({"error": "User not logged in"}), 401
+
     data = request.get_json()
     skill_level = data.get('skillLevel')
     player_notes = data.get('playerNotes')
-    # helpful for debugging
-    #print("Skill Level:", skill_level)
-    #print("Player Notes:", player_notes)
-    return jsonify({"message": "Profile saved successfully!"})
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute("UPDATE users SET skill_level = %s, personal_notes = %s WHERE username = %s",
+                    (skill_level, player_notes, session['username']))
+        conn.commit()
+        return jsonify({"message": "Profile saved successfully!"})
+    except Error as e:
+        print(e)
+        return jsonify({"error": "Failed to save profile"}), 500
+    finally:
+        cur.close()
+        conn.close()
+
 
 
 @game_bp.route("/logout", methods=['POST'])
