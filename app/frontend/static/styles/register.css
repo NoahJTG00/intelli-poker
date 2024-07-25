@@ -56,108 +56,33 @@ body {
     color: #333;
 }
 
-.input-group input {
-    width: 100%;
+.input-group .input-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.input-group .icon {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px 0;
-}
-
-.options .remember-me {
-    display: flex;
-    align-items: center;
-}
-
-.options .remember-me input {
-    margin-right: 10px;
-}
-
-button {
-    width: 100%;
-    padding: 15px;
-    background-color: #4a90e2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #357ab8;
-}
-
-.social-login {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-}
-
-.social-login a {
-    margin: 0 6px;
-}
-
-.social-login a img {
-    width: 40px;
-    height: 40px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
-    padding: 0;
-}
-
-.login-illustration, .register-illustration {
-    flex: 0.5;
-    background-color: #f9fafc;
-    padding: 20px;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-}
-
-.login-illustration img, .register-illustration img {
-    max-width: 100%;
-    max-height: 250px;
-}
-
-.login-form a, .register-form a {
-    color: #4a90e2;
-    text-decoration: none;
-}
-
-.login-form a:hover, .register-form a:hover {
-    text-decoration: underline;
-}
-
-.input-group {
-    margin: 20px 0;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
+    background-color: #f2f2f2;
     color: #333;
+    min-width: 40px;
+    text-align: center;
 }
 
 .input-group input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: none;
+    outline: none;
     box-sizing: border-box;
+    background-size: 20px 20px;
 }
 
 .options {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin: 20px 0;
 }

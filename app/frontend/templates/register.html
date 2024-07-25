@@ -16,15 +16,24 @@
             <form method="POST" action="{{ url_for('game_bp.register') }}">
                 <div class="input-group">
                     <label for="username">Username</label>
-                    <input type="text" name="username" id="username" placeholder="user" required>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user icon"></i> <!-- Font Awesome User Icon -->
+                        <input type="text" name="username" id="username" placeholder="user" required>
+                    </div>
                 </div>
                 <div class="input-group">
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email" placeholder="user@gmail.com" required>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope icon"></i> <!-- Font Awesome Envelope Icon -->
+                        <input type="email" name="email" id="email" placeholder="user@gmail.com" required>
+                    </div>
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" placeholder="••••••••" required>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock icon"></i> <!-- Font Awesome Lock Icon -->
+                        <input type="password" name="password" id="password" placeholder="••••••••" required>
+                    </div>
                 </div>
                 <button type="submit">Sign Up</button>
             </form>
@@ -36,7 +45,7 @@
             </div>
         </div>
         <div class="register-illustration">
-            <img src="{{ url_for('static', filename='/images/stuff.jpg') }}" alt="Illustration">
+            <img src="{{ url_for('static', filename='images/stuff.jpg') }}" alt="Illustration">
         </div>
     </div>
 </body>
