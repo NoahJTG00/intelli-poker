@@ -90,11 +90,11 @@
                 </div>
                 <div class="achievement-details">
                     <h2>Overachiever</h2>
-                    <p>Play 3 consecutive games</p>
+                    <p>Play 1 game today!</p>
                     <div class="progress-bar">
-                        <div class="progress" id="playGamesProgress" style="width: 33%;"></div>
+                        <div class="progress" id="playGamesProgress" style="width: 0%;"></div>
                     </div>
-                    <span id="playGamesCount">1/3</span>
+                    <span id="playGamesCount">1/1</span>
                 </div>
             </div>
             
@@ -111,7 +111,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             fetchProfileData();
-            checkScroll();
         });
 
         function fetchProfileData() {
@@ -120,20 +119,40 @@
             .then(data => {
                 document.getElementById('skillLevelSelect').value = data.skill_level || '';
                 document.getElementById('playerNotes').value = data.personal_notes || '';
-                document.getElementById('playGamesProgress').style.width = `${(data.play_consecutive_games / 3) * 100}%`;
-                document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/3`;
+                document.getElementById('playGamesProgress').style.width = `${(data.play_consecutive_games / 1) * 100}%`;
+                document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/1`;
                 document.getElementById('accountAgeAward').innerText = data.account_age_award;
                 document.getElementById('dailyStreakProgress').style.width = `${(data.daily_streak / 31) * 100}%`;
                 document.getElementById('dailyStreakCount').innerText = `${data.daily_streak}/31`;
+
 
                 if (data.first_profile_visit) {
                     notifyUser(`Congratulations! You earned the ${data.account_age_award} award!`);
                     triggerConfetti();
                 }
 
-                if (data.play_consecutive_games == 3) {
-                    notifyUser("Congratulations! You've achieved the Overachiever award!");
+                if (data.play_consecutive_games == 1 && data.overachiever_notified) {
+                    notifyUser("You've achieved the Overachiever award!");
                     triggerConfetti();
+                    fetch('/update_overachiever_notified', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ username: data.username })
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(updateData => {
+                        console.log('Overachiever notified status updated:', updateData);
+                    })
+                    .catch(error => {
+                        console.error('Error updating overachiever notified status:', error);
+                    });
                 }
 
                 if (data.daily_streak == 31) {
@@ -226,25 +245,26 @@
             });
         }
 
-        function checkScroll() {
-            window.addEventListener('scroll', () => {
-                const element = document.querySelector('#playGamesProgress');
-                const rect = element.getBoundingClientRect();
-                const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+        // function checkScroll() {
+        //     window.addEventListener('scroll', () => {
+        //         const element = document.querySelector('#playGamesProgress');
+        //         const rect = element.getBoundingClientRect();
+        //         const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
 
-                if (!(rect.bottom < 0 || rect.top - viewHeight >= 0)) {
-                    // Element is in view
-                    console.log('Element is in view');
-                    if (window.profileData && window.profileData.play_consecutive_games == 3) {
-                        console.log("Achievement condition met. Triggering confetti.");
-                        triggerConfetti();
-                        notifyUser("Congratulations! You've achieved the Overachiever award!");
-                    }
-                } else {
-                    console.log('Element is not in view');
-                }
-            });
-        }
+        //         if (!(rect.bottom < 0 || rect.top - viewHeight >= 0)) {
+        //             // Element is in view
+        //             console.log('Element is in view');
+                    
+        //             if (window.profileData && window.profileData.play_consecutive_games == 1) {
+        //                 console.log("Achievement condition met. Triggering confetti.");
+        //                 notifyUser("Congratulations! You've achieved the Overachiever award!");
+        //             }
+
+        //         } else {
+        //             console.log('Element is not in view');
+        //         }
+        //     });
+        // }
 
         function notifyUser(message) {
             console.log("Notifying user:", message);  // Debugging statement
@@ -260,7 +280,7 @@
         }
 
         // UNCOMMENT ONLY TO CLICK BUTTON TO RESET PROGRESS
-        
+        /***
         function resetProgress() {
             var resetValue = document.getElementById('resetValue').value;
 
@@ -285,7 +305,7 @@
             .catch((error) => {
                 console.error('Error:', error);
             });
-        }
+        }***/
         
     </script>
 </body>

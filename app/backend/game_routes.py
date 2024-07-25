@@ -99,8 +99,19 @@ def log_game_completion():
             else:
                 # If the user played today already, do nothing
                 pass
+        
+            # Check and update the first game played and overachiever notified flags
+            first_game_played = user['first_game_played']
+            overachiever_notified = user['overachiever_notified']
+            if not first_game_played:
+                cur.execute("UPDATE users SET first_game_played = TRUE WHERE username = %s", (session['username'],))
+                first_game_played = True
+            if not overachiever_notified and first_game_played:
+                cur.execute("UPDATE users SET overachiever_notified = TRUE WHERE username = %s", (session['username'],))
+                overachiever_notified = True
+
             conn.commit()
-            return jsonify({"message": "Game logged successfully", "daily_streak": new_streak})
+            return jsonify({"message": "Game logged successfully", "daily_streak": new_streak, "first_game_played": first_game_played, "overachiever_notified": overachiever_notified})
         return jsonify({"error": "User not found"}), 404
     except Error as e:
         print(e)
@@ -108,6 +119,28 @@ def log_game_completion():
     finally:
         cur.close()
         conn.close()
+
+@game_bp.route('/update_overachiever_notified', methods=['POST'])
+def update_overachiever_notified():
+    data = request.get_json()
+    username = data.get('username')
+    
+    if not username:
+        return jsonify({"error": "Username not provided"}), 400
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute("UPDATE users SET overachiever_notified = TRUE WHERE username = %s", (username,))
+        conn.commit()
+        return jsonify({"message": "Overachiever notified status updated successfully"}), 200
+    except Error as e:
+        print(e)
+        return jsonify({"error": "Failed to update overachiever notified status"}), 500
+    finally:
+        cur.close()
+        conn.close()
+
 
 @game_bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -169,7 +202,7 @@ def increment_progress():
 
             cur.execute("UPDATE users SET play_consecutive_games = %s WHERE username = %s", (new_count, session['username']))
 
-            if new_count == 3 and not overachiever_notified:
+            if new_count == 1 and not overachiever_notified:
                 cur.execute("UPDATE users SET overachiever_notified = TRUE WHERE username = %s", (session['username'],))
             conn.commit()
             return jsonify({"message": "Progress incremented", "play_consecutive_games": new_count, "overachiever_notified": new_count == 3 and not overachiever_notified})

@@ -62,12 +62,6 @@ nav a:hover {
     background-color: #c82333; /* A darker red for hover to provide interactive feedback */
 }
 
-
-
-.header nav a:hover {
-    text-decoration: underline;
-}
-
 .profile-section {
     max-width: 800px;
     margin: 40px auto;
@@ -197,7 +191,7 @@ select {
     position: fixed;
     top: 10px;
     right: 10px;
-    background-color: #3da7e0;
+    background-color: #89e465;
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
