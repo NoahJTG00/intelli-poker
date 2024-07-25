@@ -6,13 +6,14 @@
     <title>Your Progress</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/profile.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
     <header class="header">
         <div class="logo">Intelli-Poker</div>
         <nav>
             <a href="{{ url_for('main_bp.index') }}">Home</a>
-            <a href="{{ url_for('game_bp.play_game') }}" onclick="incrementProgress()">Start Game</a>
+            <a href="{{ url_for('game_bp.play_game') }}">Start Game</a>
             <a href="{{ url_for('game_bp.instructions') }}">Instructions</a>
             <a href="{{ url_for('game_bp.profile') }}">Profile</a>
         </nav>
@@ -20,7 +21,6 @@
     <main>
         <div class="profile-section">
             <h1>Progress</h1>
-            <!-- Skill Level Indicator -->
             <div class="profile-item">
                 <h2>Skill Level</h2>
                 <select id="skillLevelSelect" name="skillLevel">
@@ -28,7 +28,6 @@
                     <option value="intermediate">Intermediate</option>
                 </select>
             </div>
-            <!-- Personal Notes Section -->
             <div class="profile-item">
                 <h2>Personal Notes</h2>
                 <textarea id="playerNotes" name="playerNotes" placeholder="Your strategies, goals, etc."></textarea>
@@ -37,14 +36,13 @@
         </div>
         <div class="profile-section">
             <h1>Awards</h1>
-            <!-- Account Age Award Section -->
             <div class="achievement-item">
                 <div class="achievement-icon">
                     <img src="{{ url_for('static', filename='images/age.jpeg') }}" alt="Account Age Award Icon">
                 </div>
                 <div class="achievement-details">
                     <h2>Account Age Award</h2>
-                    <p id="accountAgeAward"></p> 
+                    <p id="accountAgeAward"></p>
                 </div>
             </div>
             <div class="achievement-item">
@@ -97,27 +95,25 @@
                         <div class="progress" id="playGamesProgress" style="width: 33%;"></div>
                     </div>
                     <span id="playGamesCount">1/3</span>
-                </div>          
+                </div>
             </div>
-            <form action="{{ url_for('game_bp.logout') }}" method="post">
-                <button type="submit" class="logout-button">Logout</button>
-            </form>
-             <!-- Manual Progress Reset Section -->
-             <!---
-             <div class="profile-item">
+            <!--
+            <div class="profile-item">
                 <h2>Reset Progress</h2>
                 <input type="number" id="resetValue" placeholder="Enter reset value" min="0" max="5">
                 <button onclick="resetProgress()" class="reset-button">Reset Progress</button>
-            </div>-->
+            </div> -->
+            <form action="{{ url_for('game_bp.logout') }}" method="post">
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
         </div>
     </main>
-    <script src="{{ url_for('static', filename='scripts/profile.js') }}"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            updateProfile();
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchProfileData();
         });
 
-        function updateProfile() {
+        function fetchProfileData() {
             fetch('/get_profile')
             .then(response => response.json())
             .then(data => {
@@ -128,31 +124,13 @@
                 document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/3`;
                 document.getElementById('accountAgeAward').innerText = data.account_age_award;
                 console.log("Account Age Award updated to:", data.account_age_award);  // Debugging statement
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        }
 
-        function incrementProgress() {
-            fetch('/increment_progress', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
+                // Check if confetti should be triggered
+                if (data.play_consecutive_games == 3) {
+                    triggerConfetti();
                 }
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Success:', data);
-                // Fetch and update the progress bar
-                updateProfile();
-            })
-            .catch((error) => {
+            .catch(error => {
                 console.error('Error:', error);
             });
         }
@@ -178,12 +156,33 @@
                 console.log('Success:', data);
                 alert(data.message || 'Profile saved successfully!');
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error('Error:', error);
                 alert('Failed to save profile. Please try again.');
             });
         }
-        
+
+        function updateProgress(playConsecutiveGames) {
+            const progress = (playConsecutiveGames / 3) * 100;
+            document.getElementById('playGamesProgress').style.width = `${progress}%`;
+            document.getElementById('playGamesCount').innerText = `${playConsecutiveGames}/3`;
+
+            // Trigger confetti when the goal is reached
+            if (playConsecutiveGames == 3) {
+                console.log("Triggering confetti!");  // Debugging statement
+                triggerConfetti();
+            }
+        }
+
+        function triggerConfetti() {
+            console.log("Confetti function called!");  // Debugging statement
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+
         // UNCOMMENT ONLY TO CLICK BUTTON TO RESET PROGRESS
         /***
         function resetProgress() {

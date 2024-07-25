@@ -6,45 +6,14 @@
     <title>Play Poker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/game.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <script>
-        function receiveMessage(data) {
-            const chatArea = document.getElementById('chat-area');
-
-            // Append bot response to chat area
-            const botMessage = document.createElement('div');
-            botMessage.className = 'message bot-message';
-            botMessage.textContent = 'Bot: ' + data.response;
-            chatArea.appendChild(botMessage);
-        }
-
-        function fetchAnalysis() {
-            fetch('/get_analysis')
-            .then(response => response.json())
-            .then(data => {
-                const chatArea = document.getElementById('chat-area');
-                chatArea.innerHTML = ''; // Clear existing messages
-                data.analysis_list.forEach(analysis => {
-                    const botMessage = document.createElement('div');
-                    botMessage.className = 'message bot-message';
-                    botMessage.textContent = 'Bot: ' + analysis;
-                    chatArea.appendChild(botMessage);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching analysis:', error);
-            });
-        }
-
-        // Periodically fetch the analysis data
-        setInterval(fetchAnalysis, 5000); // Fetch every 5 seconds
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
-<body onload="fetchAnalysis()">
+<body>
     <header class="header">
         <div class="logo">Intelli-Poker</div>
         <nav>
             <a href="{{ url_for('main_bp.index') }}">Home</a>
-            <a href="{{ url_for('game_bp.play_game') }}" onclick="incrementProgress()">Start Game</a>
+            <a href="{{ url_for('game_bp.play_game') }}">Start Game</a>
             <a href="{{ url_for('game_bp.instructions') }}">Instructions</a>
             <a href="{{ url_for('game_bp.profile') }}">Profile</a>
         </nav>
@@ -68,7 +37,13 @@
         </main>
     </div>
     <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            console.log("Page loaded, calling incrementProgress");
+            incrementProgress();
+        });
+
         function incrementProgress() {
+            console.log("Increment progress called");
             fetch('/increment_progress', {
                 method: 'POST',
                 headers: {
@@ -83,61 +58,33 @@
             })
             .then(data => {
                 console.log('Success:', data);
-                // Fetch and update the progress bar
-                updateProgress();
+                updateProgress(data.play_consecutive_games);
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
         }
-    
-        function updateProgress() {
-            fetch('/get_profile')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('playGamesProgress').style.width = `${(data.play_consecutive_games / 5) * 100}%`;
-                document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/5`;
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+
+        function updateProgress(playConsecutiveGames) {
+            const progress = (playConsecutiveGames / 3) * 100;
+            document.getElementById('playGamesProgress').style.width = `${progress}%`;
+            document.getElementById('playGamesCount').innerText = `${playConsecutiveGames}/3`;
+
+            // Trigger confetti when the goal is reached
+            if (playConsecutiveGames == 3) {
+                console.log("Triggering confetti!");  // Debugging statement
+                triggerConfetti();
+            }
+        }
+
+        function triggerConfetti() {
+            console.log("Confetti function called!");  // Debugging statement
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
             });
         }
-    </script>    
-    <script>
-        function incrementProgress() {
-            fetch('/increment_progress', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Success:', data);
-                // Fetch and update the progress bar
-                updateProgress();
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        }
-    
-        function updateProgress() {
-            fetch('/get_profile')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('playGamesProgress').style.width = `${(data.play_consecutive_games / 5) * 100}%`;
-                document.getElementById('playGamesCount').innerText = `${data.play_consecutive_games}/5`;
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        }
-    </script>    
+    </script>
 </body>
 </html>
