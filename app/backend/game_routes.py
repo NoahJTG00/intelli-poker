@@ -12,12 +12,24 @@ from .utils import get_db_connection
 import socket
 
 game_bp = Blueprint('game_bp', __name__)
-
+hand_history_data = []
 # Existing routes ...
+
+@game_bp.route('/hand_history', methods=['POST'])
+def update_hand_history():
+    global hand_history_data
+    hand_history_data = request.json.get('hand_history', [])
+    return jsonify({'status': 'success'})
+
+# New route to serve hand history data
+@game_bp.route('/get_hand_history', methods=['GET'])
+def get_hand_history():
+    return jsonify({'hand_history': hand_history_data})
 
 @game_bp.route('/start', methods=['GET', 'POST'])
 def start_game():
     if not is_server_running('127.0.0.1', 8000):
+        print("------hHHEREH-----", flush=True)
         start_server()
         return jsonify({'status': 'Server started'}), 200
     return jsonify({'status': 'Server already running'}), 200
@@ -92,7 +104,7 @@ def login():
 
 @game_bp.route('/game', methods=['GET'])
 def play_game():
-    start_game() 
+    start_game()
     sleep(2)
     return render_template('game.html')  
 

@@ -46,4 +46,6 @@ class RandomPlayer(BasePokerPlayer):
     pass
 
 def setup_ai():
-    return RandomPlayer()
+    player = RandomPlayer()
+    player.set_action_ratio(fold_ratio=50, call_ratio=45, raise_ratio=5)
+    return player

@@ -53,7 +53,7 @@ def create_app():
         )
 
         response_text = response.choices[0].message.content
-
+        print(response_text, flush=True)
         return jsonify({'response': response_text})
 
     @app.route('/analysis', methods=['POST'])
