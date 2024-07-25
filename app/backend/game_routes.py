@@ -193,9 +193,9 @@ def get_profile():
             else:
                 user_profile['account_age_award'] = 'Newbie'
 
-            print(user_profile) 
+            #print(user_profile) 
             return jsonify(user_profile)
-        print("Default profile returned")  # Debugging statement
+        #print("Default profile returned")  # Debugging statement
         return jsonify({"skill_level": "", "personal_notes": "", "play_consecutive_games": 0, "account_age_days": 0, "account_age_award": "Newbie"})
     except Error as e:
         print(e)
