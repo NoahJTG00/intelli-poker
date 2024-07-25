@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - IntelliPoker</title>
+    <title>Login - Intelli-Poker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/login.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -11,7 +11,7 @@
 <body>
     <div class="login-container">
         <div class="login-form">
-            <h1>Welcome to IntelliPoker!</h1>
+            <h1>Welcome to Intelli-Poker!</h1>
             <p>Don't have an account? <a href="{{ url_for('game_bp.register') }}">Sign up</a></p>
             <form method="POST" action="{{ url_for('game_bp.login') }}">
                 <div class="input-group">
